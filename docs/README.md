@@ -6,11 +6,19 @@
 
 | 경로 | 답하는 질문 | 상태 |
 |---|---|---|
-| `00-plan/` | 착수 전에 무엇을 정해야 하는가 | 진행 중 |
-| `01-prd/` | 왜 만드는가 · 누구를 위한 것인가 | 미착수 |
+| `00-plan/` | 착수 전에 무엇을 정해야 하는가 | 결정 9건 전부 확정 |
+| [`01-prd/prd.md`](01-prd/prd.md) | 왜 만드는가 · 누구를 위한 것인가 | 작성 완료 (판 1.0) |
 | `02-srs/` | 무엇을 만족해야 하는가 | 미착수 |
 | `03-tds/` | 어떻게 설계하는가 | 미착수 |
 | [`../tasks/`](../tasks/) | 어떤 단위로 구현·검증하는가 | 미착수 |
+
+## 착수 전 결정 (`00-plan/`)
+
+| 파일 | 용도 |
+|---|---|
+| [`grip-register.md`](00-plan/grip-register.md) | 미해소 토픽과 해소 현황을 추적하는 결정 기록부 |
+| [`product-decisions.md`](00-plan/product-decisions.md) | 확정된 결정 9건의 내용과 근거 |
+| [`pricing-simulation.md`](00-plan/pricing-simulation.md) | 과금 단위 비교 계산과 사실 확인 결과 |
 
 ## 입력 문서 (`00-plan/references/`)
 

@@ -70,6 +70,6 @@ RESOLVED: 0 / DROPPED: 0 / TOTAL: 9 (2회차)
 - [ ] S4 | CORE  | 전사와 판정에 쓰는 외부 서비스, 그리고 원가 상한  | depends:S3             | status:UNRESOLVED
 - [ ] S5 | CORE  | 처리 완료 시점 요구                              | depends:S4             | status:UNRESOLVED
 - [ ] S6 | CORE  | 계정과 인증 방식                                 | depends:S1             | status:UNRESOLVED
-- [ ] S7 | CORE  | 확정 기술 스택과 금지 스택                       | depends:S1,S2,S3,S4,S6 | status:UNRESOLVED
+- [ ] S7 | CORE  | 확정 기술 스택과 금지 스택                       | depends:S1,S2,S3,S4,S6 | status:UNRESOLVED | note:aztks 스킬로 진행
 - [ ] S8 | MINOR | SRS 문서 규약                                    | depends:-              | status:UNRESOLVED
-- [ ] S9 | MINOR | SRS에 넣을 다이어그램                            | depends:S7             | status:UNRESOLVED
+- [ ] S9 | MINOR | SRS에 넣을 다이어그램                            | depends:S7             | status:UNRESOLVED | note:aztks 스킬로 진행

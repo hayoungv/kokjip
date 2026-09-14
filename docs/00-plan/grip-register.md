@@ -24,7 +24,7 @@
 
 ## 토픽
 
-RESOLVED: 7 / DROPPED: 0 / TOTAL: 9
+RESOLVED: 8 / DROPPED: 0 / TOTAL: 9
 
 - [x] T1 | CORE  | 제품을 직접 쓰는 주체와 값을 지불하는 주체의 위상 | depends:-        | status:RESOLVED | decision:기관이 구매하고 학습자가 사용한다 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-1
 - [x] T2 | CORE  | 훈련기관이 이 제품을 구매하는 이유(핵심 가치) | depends:T1       | status:RESOLVED | decision:1순위 중도 탈락 감소, 2순위 취업률 방어 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-2
@@ -32,6 +32,6 @@ RESOLVED: 7 / DROPPED: 0 / TOTAL: 9
 - [x] T4 | CORE  | 과금 단위와 계약 형태 | depends:T2       | status:RESOLVED | decision:재적 인원 기준 월별 청구, 1인 1개월 3,000원 | applied:docs/00-plan/product-decisions.md, docs/00-plan/pricing-simulation.md, AGENTS.md §5-4
 - [x] T5 | CORE  | 신호 판정의 품질 기준선(오탐과 미탐의 우선순위) | depends:T2       | status:RESOLVED | decision:정밀도 우선, 재현율 하한 88.7% | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-5
 - [x] T6 | CORE  | 최소 기능 범위 재확정 | depends:T2,T3,T5 | status:RESOLVED | decision:학습자 화면 전부+강사 동의+기관 화면 1종, 관리 업무는 수동 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-6
-- [ ] T7 | CORE  | 개인정보와 저작권 운영 규칙의 확정 수준           | depends:T3       | status:UNRESOLVED
+- [x] T7 | CORE  | 개인정보와 저작권 운영 규칙의 확정 수준 | depends:T3       | status:RESOLVED | decision:질의응답 포함 전사·강사 외 화자는 무기명 단일 표시·전사본 과정 종료 후 1년 보관 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-8
 - [x] T9 | CORE  | 뒤처짐을 무엇으로 판정하는가 | depends:T6       | status:RESOLVED | decision:복습 목록 미열람 3일 연속(강의가 올라온 날 기준) | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-7
 - [ ] T8 | MINOR | 제품 문서에서 쓰는 용어 표기 기준                 | depends:T6       | status:UNRESOLVED

@@ -24,10 +24,10 @@
 
 ## 토픽
 
-RESOLVED: 1 / DROPPED: 0 / TOTAL: 8
+RESOLVED: 2 / DROPPED: 0 / TOTAL: 8
 
 - [x] T1 | CORE  | 제품을 직접 쓰는 주체와 값을 지불하는 주체의 위상 | depends:-        | status:RESOLVED | decision:기관이 구매하고 학습자가 사용한다 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-1
-- [ ] T2 | CORE  | 훈련기관이 이 제품을 구매하는 이유(핵심 가치)     | depends:T1       | status:UNRESOLVED
+- [x] T2 | CORE  | 훈련기관이 이 제품을 구매하는 이유(핵심 가치) | depends:T1       | status:RESOLVED | decision:중도 탈락을 줄이는 것이 구매 이유다 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-2
 - [ ] T3 | CORE  | 강의 음성 데이터의 획득 경로와 강사 동의 절차     | depends:T1       | status:UNRESOLVED
 - [ ] T4 | CORE  | 과금 단위와 계약 형태                            | depends:T2       | status:UNRESOLVED
 - [ ] T5 | CORE  | 신호 판정의 품질 기준선(오탐과 미탐의 우선순위)   | depends:T2       | status:UNRESOLVED

@@ -41,3 +41,35 @@ RESOLVED: 9 / DROPPED: 0 / TOTAL: 9
 ## 종료 — 2026-09-14
 
 토픽 9건이 모두 해소됐다. PRD 착수 조건이 충족됐다.
+
+---
+
+# 2회차 — SRS 착수 전 (2026-09-14)
+
+> 참조 범위: `docs/01-prd/prd.md` · `docs/00-plan/product-decisions.md` · `AGENTS.md` · 선행 프로젝트(핀프렌즈)의 확정 기술 스택
+> 관심 방향: SRS를 쓰기 전에 확정해야 할 기술 결정과 문서 규약
+> 반영 대상: 근거 문서 `docs/00-plan/` · 규범 문서 `AGENTS.md`
+
+## 재료 점검
+
+| 역할 | 상태 | 근거 |
+|---|---|---|
+| R1 목적 · 성공 기준 | 충족 | PRD 1장, 13장 |
+| R2 범위 · 산출물 정의 | 충족 | PRD 6~8장 |
+| R3 대상 · 이해관계자 | 충족 | PRD 3장 |
+| R4 제약조건 | 부분 | PRD 9~11장에 품질·데이터·과금 제약은 있으나 인프라 비용과 기기 저장 제약이 없다. S4와 S1로 흡수 |
+| R5 현재 진척 · 기결정 | 충족 | `product-decisions.md` 결정 9건 |
+
+## 토픽
+
+RESOLVED: 0 / DROPPED: 0 / TOTAL: 9 (2회차)
+
+- [ ] S1 | CORE  | 학습자가 쓰는 실행 형태                          | depends:-              | status:UNRESOLVED
+- [ ] S2 | CORE  | 녹음을 앱이 직접 하는가, 외부 파일을 받는가       | depends:S1             | status:UNRESOLVED
+- [ ] S3 | CORE  | 음성이 서버를 거치는가 — 미보관 규칙의 해석       | depends:S2             | status:UNRESOLVED
+- [ ] S4 | CORE  | 전사와 판정에 쓰는 외부 서비스, 그리고 원가 상한  | depends:S3             | status:UNRESOLVED
+- [ ] S5 | CORE  | 처리 완료 시점 요구                              | depends:S4             | status:UNRESOLVED
+- [ ] S6 | CORE  | 계정과 인증 방식                                 | depends:S1             | status:UNRESOLVED
+- [ ] S7 | CORE  | 확정 기술 스택과 금지 스택                       | depends:S1,S2,S3,S4,S6 | status:UNRESOLVED
+- [ ] S8 | MINOR | SRS 문서 규약                                    | depends:-              | status:UNRESOLVED
+- [ ] S9 | MINOR | SRS에 넣을 다이어그램                            | depends:S7             | status:UNRESOLVED

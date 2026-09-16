@@ -1,0 +1,259 @@
+// 콕집 데이터 모델
+// 기술 설계 문서 3-1의 표 14종을 그대로 옮긴 것이다.
+// 저장하는 모든 시각은 실제 시각이다. 경과 시각은 화면에서만 계산한다.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// 훈련기관
+model Institution {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+
+  courses Course[]
+  admins  InstitutionAdmin[]
+}
+
+/// 훈련기관 담당자 계정
+model InstitutionAdmin {
+  id            String   @id @default(cuid())
+  institutionId String
+  email         String   @unique
+  passwordHash  String
+  createdAt     DateTime @default(now())
+
+  institution Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+
+  @@index([institutionId])
+}
+
+/// 과정
+model Course {
+  id            String    @id @default(cuid())
+  institutionId String
+  instructorId  String
+  name          String
+  startDate     DateTime  @db.Date
+  endDate       DateTime  @db.Date
+  capacity      Int
+  createdAt     DateTime  @default(now())
+
+  institution Institution        @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  instructor  Instructor         @relation(fields: [instructorId], references: [id])
+  sessions    Session[]
+  enrollments Enrollment[]
+  invites     Invite[]
+  consents    RecordingConsent[]
+
+  @@index([institutionId])
+  @@index([instructorId])
+}
+
+/// 강사. 계정을 만들지 않으며 전용 주소로만 들어온다.
+model Instructor {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  createdAt DateTime @default(now())
+
+  courses  Course[]
+  consents RecordingConsent[]
+}
+
+/// 강사의 녹음 허용. 전용 주소는 요약본만 저장한다.
+model RecordingConsent {
+  id             String    @id @default(cuid())
+  instructorId   String
+  courseId       String
+  tokenHash      String    @unique
+  tokenExpiresAt DateTime
+  consentedAt    DateTime?
+  lastNotifiedAt DateTime?
+  createdAt      DateTime  @default(now())
+
+  instructor Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  course     Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([instructorId, courseId])
+  @@index([courseId])
+}
+
+/// 학습자. 구글 계정으로 들어온다.
+model Learner {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  googleSubject String?  @unique
+  joinedAt      DateTime @default(now())
+
+  enrollments Enrollment[]
+  segments    RecordingSegment[]
+  listViews   ListView[]
+}
+
+/// 초대 명단. 명단에 있는 이메일로 로그인한 사람만 들어온다.
+model Invite {
+  id         String    @id @default(cuid())
+  courseId   String
+  email      String
+  name       String
+  acceptedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, email])
+}
+
+/// 수강. 한 학습자의 소속은 하나다.
+model Enrollment {
+  id        String    @id @default(cuid())
+  courseId  String
+  learnerId String
+  joinedOn  DateTime  @db.Date
+  leftOn    DateTime? @db.Date
+
+  course  Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  learner Learner @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, learnerId])
+  @@index([learnerId])
+}
+
+/// 회차. 올라온 녹음의 날짜로 만든다. 기본 상태는 열림이다.
+model Session {
+  id        String    @id @default(cuid())
+  courseId  String
+  date      DateTime  @db.Date
+  blockedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  course        Course             @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  segments      RecordingSegment[]
+  coveredRanges CoveredRange[]
+  highlights    Highlight[]
+  listViews     ListView[]
+
+  @@unique([courseId, date])
+}
+
+/// 녹음 조각. 한 회차에 정본은 하나이고 조각은 여럿이다.
+model RecordingSegment {
+  id            String   @id @default(cuid())
+  sessionId     String
+  learnerId     String
+  clientKey     String
+  startedAt     DateTime
+  endedAt       DateTime
+  gaps          Json     @default("[]")
+  clockOffsetMs Int      @default(0)
+  isCanonical   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  session     Session      @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  learner     Learner      @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  transcript  Transcript?
+  audioIntake AudioIntake?
+  highlights  Highlight[]
+
+  @@unique([learnerId, clientKey])
+  @@index([sessionId])
+}
+
+/// 옮긴 글. 화자 항목은 없다.
+model Transcript {
+  id        String   @id @default(cuid())
+  segmentId String   @unique
+  blocks    Json
+  createdAt DateTime @default(now())
+
+  segment RecordingSegment @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+}
+
+/// 이미 옮기고 판정까지 마친 구간. 중복 처리를 막는 장치다.
+model CoveredRange {
+  id        String   @id @default(cuid())
+  sessionId String
+  fromAt    DateTime
+  toAt      DateTime
+  createdAt DateTime @default(now())
+
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, fromAt])
+}
+
+/// 강조한 대목. 시각은 실제 시각이다.
+model Highlight {
+  id              String        @id @default(cuid())
+  sessionId       String
+  sourceSegmentId String
+  type            HighlightType
+  quote           String
+  occurredAt      DateTime
+  createdAt       DateTime      @default(now())
+
+  session       Session          @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sourceSegment RecordingSegment @relation(fields: [sourceSegmentId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, occurredAt, type])
+  @@index([sessionId])
+}
+
+/// 복습 목록을 연 기록. 뒤처짐 판정의 유일한 근거다.
+model ListView {
+  id        String   @id @default(cuid())
+  learnerId String
+  sessionId String
+  viewedAt  DateTime @default(now())
+
+  learner Learner @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([learnerId, sessionId])
+}
+
+/// 예외 경로로 들어온 음성의 유입과 삭제 기록.
+model AudioIntake {
+  id         String    @id @default(cuid())
+  segmentId  String    @unique
+  receivedAt DateTime  @default(now())
+  deletedAt  DateTime?
+
+  segment RecordingSegment @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+
+  @@index([deletedAt])
+}
+
+/// 판정 묶음. 쓴 토큰과 비용을 기록한다.
+model JudgementBatch {
+  id           String    @id @default(cuid())
+  externalId   String    @unique
+  submittedAt  DateTime  @default(now())
+  completedAt  DateTime?
+  inputTokens  Int       @default(0)
+  outputTokens Int       @default(0)
+  costKrw      Int       @default(0)
+
+  @@index([submittedAt])
+}
+
+/// 강조한 대목의 여덟 가지 유형.
+/// 본문 표기와의 대응은 시스템 요구사항 정의서 부록 A-1에 있다.
+enum HighlightType {
+  AVOID
+  PRACTICAL
+  CORE
+  EMPHASIS
+  MUST
+  RATIONALE
+  INSIGHT
+  REVIEW
+}

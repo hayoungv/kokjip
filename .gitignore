@@ -30,3 +30,20 @@ Thumbs.db
 # 임시
 tmp/
 .cache/
+
+# Next.js
+/.next/
+/out/
+/build
+.vercel
+next-env.d.ts
+
+# 환경 변수
+.env*
+!.env.example
+
+# Prisma
+/prisma/migrations/dev.db*
+
+# Prisma가 만들어 내는 코드
+/src/generated

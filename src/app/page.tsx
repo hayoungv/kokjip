@@ -5,12 +5,12 @@ import { BrandHeader } from "./brand-header";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [institutions, courses, sessions, segments, tasks] = await Promise.all([
+  const [institutions, courses, sessions, segments, highlights] = await Promise.all([
     prisma.institution.count(),
     prisma.course.count(),
     prisma.session.count(),
     prisma.recordingSegment.count(),
-    prisma.judgementTask.count({ where: { status: "PENDING" } }),
+    prisma.highlight.count(),
   ]);
 
   const stats = [
@@ -18,7 +18,7 @@ export default async function Home() {
     { label: "과정", value: courses },
     { label: "회차", value: sessions },
     { label: "올라온 녹음", value: segments },
-    { label: "판정 대기", value: tasks },
+    { label: "먼저 볼 대목", value: highlights },
   ];
 
   return (
@@ -52,11 +52,20 @@ export default async function Home() {
           <ul className="mt-3 space-y-2">
             <li>
               <Link
+                href="/review"
+                className="flex items-center justify-between rounded-lg bg-brand px-4 py-3 text-sm font-medium text-white"
+              >
+                복습할 수업 보기
+                <span aria-hidden>&gt;</span>
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/upload"
                 className="flex items-center justify-between rounded-lg bg-brand-soft px-4 py-3 text-sm font-medium text-brand"
               >
                 옮긴 글 올리기
-                <span aria-hidden>→</span>
+                <span aria-hidden>&gt;</span>
               </Link>
             </li>
           </ul>

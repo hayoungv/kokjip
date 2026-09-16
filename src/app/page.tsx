@@ -18,7 +18,7 @@ export default async function Home() {
     { label: "과정", value: courses },
     { label: "회차", value: sessions },
     { label: "올라온 녹음", value: segments },
-    { label: "먼저 볼 대목", value: highlights },
+    { label: "강조한 말", value: highlights },
   ];
 
   return (
@@ -64,7 +64,7 @@ export default async function Home() {
                 href="/upload"
                 className="flex items-center justify-between rounded-lg bg-brand-soft px-4 py-3 text-sm font-medium text-brand"
               >
-                옮긴 글 올리기
+                강의 기록 올리기
                 <span aria-hidden>&gt;</span>
               </Link>
             </li>

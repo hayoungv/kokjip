@@ -26,7 +26,7 @@ function show(ranges: TimeRange[]): string[] {
 }
 
 describe("planProcessing — 정본 선정과 처리 대상 산출", () => {
-  it("첫 조각은 정본이 되고 전체가 처리 대상이다", () => {
+  it("첫 녹음은 정본이 되고 전체가 처리 대상이다", () => {
     const plan = planProcessing(segment("09:00", "11:00"), []);
 
     expect(plan.isCanonical).toBe(true);
@@ -34,7 +34,7 @@ describe("planProcessing — 정본 선정과 처리 대상 산출", () => {
     expect(show(plan.nextCoveredRanges)).toEqual(["09:00~11:00"]);
   });
 
-  it("두 번째 조각은 정본이 아니다", () => {
+  it("두 번째 녹음은 정본이 아니다", () => {
     const plan = planProcessing(segment("09:00", "11:00"), [
       range("09:00", "11:00"),
     ]);
@@ -51,7 +51,7 @@ describe("planProcessing — 정본 선정과 처리 대상 산출", () => {
     expect(show(plan.nextCoveredRanges)).toEqual(["09:00~11:00"]);
   });
 
-  it("정본보다 늦게 시작한 조각은 처리할 것이 없다", () => {
+  it("정본보다 늦게 시작한 녹음은 처리할 것이 없다", () => {
     const plan = planProcessing(segment("09:30", "10:30"), [
       range("09:00", "11:00"),
     ]);
@@ -96,7 +96,7 @@ describe("planProcessing — 정본 선정과 처리 대상 산출", () => {
     expect(show(plan.nextCoveredRanges)).toEqual(["09:00~12:00"]);
   });
 
-  it("이 조각이 멈춘 구간은 처리 대상에서 빠진다", () => {
+  it("이 녹음이 멈춘 구간은 처리 대상에서 빠진다", () => {
     const plan = planProcessing(
       segment("09:00", "12:00", [range("10:00", "10:30")]),
       [],
@@ -105,7 +105,7 @@ describe("planProcessing — 정본 선정과 처리 대상 산출", () => {
     expect(show(plan.rangesToProcess)).toEqual(["09:00~10:00", "10:30~12:00"]);
   });
 
-  it("같은 조각을 두 번 넣어도 처리 대상이 늘지 않는다", () => {
+  it("같은 녹음을 두 번 넣어도 처리 대상이 늘지 않는다", () => {
     const first = planProcessing(segment("09:00", "11:00"), []);
     const second = planProcessing(
       segment("09:00", "11:00"),
@@ -118,7 +118,7 @@ describe("planProcessing — 정본 선정과 처리 대상 산출", () => {
     );
   });
 
-  it("조각 세 개를 차례로 넣어도 총량이 합집합을 넘지 않는다", () => {
+  it("녹음 세 개를 차례로 넣어도 총량이 합집합을 넘지 않는다", () => {
     let covered: TimeRange[] = [];
     const processed: TimeRange[] = [];
 
@@ -132,7 +132,7 @@ describe("planProcessing — 정본 선정과 처리 대상 산출", () => {
       covered = plan.nextCoveredRanges;
     }
 
-    // 세 조각의 합집합은 08:00~13:00 이고, 처리한 총량도 그것과 같아야 한다.
+    // 세 녹음의 합집합은 08:00~13:00 이고, 처리한 총량도 그것과 같아야 한다.
     expect(show(covered)).toEqual(["08:00~13:00"]);
 
     const processedMs = processed.reduce(

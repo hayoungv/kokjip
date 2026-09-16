@@ -80,7 +80,7 @@ export function UploadForm({ courseId, courseName, learners }: Props) {
   return (
     <div className="space-y-8">
       <section>
-        <h2 className="text-sm font-medium text-navy">1. 옮긴 글 파일</h2>
+        <h2 className="text-sm font-medium text-navy">1. 강의 기록 파일</h2>
         <p className="mt-1 text-sm text-muted">
           휴대폰 녹음 앱에서 내보낸 글 파일을 고르세요. 한 파일에 녹음이 여러 개
           들어 있어도 알아서 나눕니다.

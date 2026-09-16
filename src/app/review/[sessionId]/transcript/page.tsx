@@ -23,7 +23,7 @@ export default async function TranscriptPage({
 
   if (segments.length === 0) notFound();
 
-  // 강조 대목이 붙은 시각을 표시해 두기 위해 모아 둔다.
+  // 강조 말이 붙은 시각을 표시해 두기 위해 모아 둔다.
   const marked = new Map<number, HighlightTypeName>();
   for (const h of highlights) {
     marked.set(h.occurredAt.getTime(), h.type as HighlightTypeName);
@@ -33,12 +33,12 @@ export default async function TranscriptPage({
 
   return (
     <>
-      <BrandHeader section="옮긴 글 전체" />
+      <BrandHeader section="강의 기록 전체" />
 
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-8">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="text-2xl font-bold text-navy">옮긴 글 전체</p>
+            <p className="text-2xl font-bold text-navy">강의 기록 전체</p>
             <p className="mt-1 text-xs text-muted">
               덩어리 {totalBlocks.toLocaleString()}개 · 화자를 구분하지 않습니다
             </p>
@@ -52,7 +52,7 @@ export default async function TranscriptPage({
         </div>
 
         <p className="mt-4 rounded-lg bg-warning-bg p-3 text-xs leading-relaxed text-warning">
-          복습 목록이 놓친 대목이 있을 수 있어 옮긴 글 전체를 그대로 둡니다.
+          복습 목록이 놓친 말이 있을 수 있어 강의 기록 전체를 그대로 둡니다.
           질의응답도 함께 들어 있으며 누가 말했는지는 기록하지 않습니다.
         </p>
 

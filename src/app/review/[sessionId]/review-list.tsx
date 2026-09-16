@@ -111,7 +111,7 @@ export function ReviewList({ sessionId, dateLabel, segments, items }: Props) {
             href={`/review/${sessionId}/transcript`}
             className="rounded-lg bg-canvas px-3 py-2 text-xs font-medium text-navy"
           >
-            옮긴 글 전체 보기
+            강의 기록 전체 보기
           </Link>
         </div>
       </section>

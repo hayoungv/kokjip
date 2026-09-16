@@ -16,7 +16,7 @@ export type ReviewItem = {
   quote: string;
   /** 실제 시각 */
   occurredAt: Date;
-  /** 그 대목이 담긴 조각. 담고 있는 조각이 없으면 null */
+  /** 그 말이 담긴 녹음. 담고 있는 녹음이 없으면 null */
   segment: { id: string; label: string; elapsedMs: number } | null;
 };
 
@@ -73,7 +73,7 @@ export async function readReviewDay(
   }));
 
   const items: ReviewItem[] = session.highlights.map((h) => {
-    // 그 시각을 담고 있는 조각을 찾아 경과 시각으로 바꾼다.
+    // 그 시각을 담고 있는 녹음을 찾아 경과 시각으로 바꾼다.
     let found: ReviewItem["segment"] = null;
 
     for (const segment of segments) {
@@ -107,7 +107,7 @@ export async function readReviewDay(
   };
 }
 
-/** 한 회차의 옮긴 글 전체를 시각 순으로 읽는다. */
+/** 한 회차의 강의 기록 전체를 시각 순으로 읽는다. */
 export async function readTranscript(sessionId: string) {
   const segments = await prisma.recordingSegment.findMany({
     where: { sessionId },

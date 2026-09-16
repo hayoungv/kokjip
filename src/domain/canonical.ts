@@ -4,13 +4,13 @@ import type { Segment, TimeRange } from "./types";
 /**
  * 정본 선정과 처리 대상 산출.
  *
- * 회차의 첫 조각을 기다리지 않고 바로 정본으로 삼는다.
- * 이후 조각은 이미 덮인 구간을 빼고 남은 것만 처리한다.
+ * 회차의 첫 녹음을 기다리지 않고 바로 정본으로 삼는다.
+ * 이후 녹음은 이미 덮인 구간을 빼고 남은 것만 처리한다.
  * 한 회차에서 처리하는 총량은 그 회차에 존재하는 구간의 합집합을 넘지 않는다.
  */
 
 export type ProcessingPlan = {
-  /** 이 조각을 정본으로 삼는지 */
+  /** 이 녹음을 정본으로 삼는지 */
   isCanonical: boolean;
   /** 판정에 넘길 구간 */
   rangesToProcess: TimeRange[];
@@ -19,9 +19,9 @@ export type ProcessingPlan = {
 };
 
 /**
- * 새로 올라온 조각을 어떻게 처리할지 정한다.
+ * 새로 올라온 녹음을 어떻게 처리할지 정한다.
  *
- * @param segment 새로 올라온 조각
+ * @param segment 새로 올라온 녹음
  * @param coveredRanges 이 회차에서 이미 옮기고 판정까지 마친 구간
  */
 export function planProcessing(
@@ -31,7 +31,7 @@ export function planProcessing(
   const covered = mergeRanges(coveredRanges);
   const coverage = segmentCoverage(segment);
 
-  // 덮인 범위가 하나도 없으면 이 조각이 이 회차의 첫 조각이다.
+  // 덮인 범위가 하나도 없으면 이 녹음이 이 회차의 첫 녹음이다.
   const isCanonical = covered.length === 0;
 
   const rangesToProcess = coverage.flatMap((range) =>

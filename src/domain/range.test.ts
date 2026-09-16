@@ -86,7 +86,7 @@ describe("subtractRanges — 덮인 범위 차집합", () => {
     expect(show(left)).toEqual(["09:00~10:00"]);
   });
 
-  it("가운데가 덮여 있으면 두 조각으로 갈라진다", () => {
+  it("가운데가 덮여 있으면 두 녹음으로 갈라진다", () => {
     const left = subtractRanges(range("09:00", "12:00"), [range("10:00", "11:00")]);
     expect(show(left)).toEqual(["09:00~10:00", "11:00~12:00"]);
   });
@@ -101,7 +101,7 @@ describe("subtractRanges — 덮인 범위 차집합", () => {
     expect(show(left)).toEqual(["09:00~10:00"]);
   });
 
-  it("덮인 구간이 여럿이면 남은 조각도 여럿이다", () => {
+  it("덮인 구간이 여럿이면 남은 녹음도 여럿이다", () => {
     const left = subtractRanges(range("09:00", "13:00"), [
       range("10:00", "10:30"),
       range("11:00", "11:30"),
@@ -131,7 +131,7 @@ describe("subtractRanges — 덮인 범위 차집합", () => {
   });
 });
 
-describe("segmentCoverage — 조각에서 소리가 있는 구간", () => {
+describe("segmentCoverage — 녹음에서 소리가 있는 구간", () => {
   it("멈춘 적이 없으면 통째로 하나다", () => {
     const coverage = segmentCoverage({
       startedAt: at("09:00"),
@@ -150,7 +150,7 @@ describe("segmentCoverage — 조각에서 소리가 있는 구간", () => {
     expect(show(coverage)).toEqual(["09:00~10:00", "10:30~12:00"]);
   });
 
-  it("멈춘 구간이 여럿이면 여러 조각으로 갈라진다", () => {
+  it("멈춘 구간이 여럿이면 여러 녹음으로 갈라진다", () => {
     const coverage = segmentCoverage({
       startedAt: at("09:00"),
       endedAt: at("13:00"),

@@ -32,7 +32,7 @@ export default async function UploadPage() {
 
   return (
     <>
-      <BrandHeader section="옮긴 글 올리기" />
+      <BrandHeader section="강의 기록 올리기" />
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12">
         <p className="text-sm text-muted">{course.name}</p>
 

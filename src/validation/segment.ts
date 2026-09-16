@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /**
- * 조각 올리기 입력 검증.
+ * 녹음 올리기 입력 검증.
  *
  * 검증하지 않고 도메인 계층으로 넘어가는 길을 만들지 않는다.
  */
@@ -28,7 +28,7 @@ export const uploadSegmentSchema = z
     courseId: z.string().min(1),
     learnerId: z.string().min(1),
 
-    /** 같은 조각을 두 번 보내도 한 번만 받기 위한 식별자 */
+    /** 같은 녹음을 두 번 보내도 한 번만 받기 위한 식별자 */
     clientKey: z.string().min(1).max(200),
 
     /** 녹음이 시작된 실제 시각 */
@@ -51,9 +51,9 @@ export const uploadSegmentSchema = z
       })
       .default(0),
 
-    /** 옮긴 글 */
+    /** 강의 기록 */
     blocks: z.array(blockSchema).min(1, {
-      message: "옮긴 글이 비어 있습니다.",
+      message: "강의 기록이 비어 있습니다.",
     }),
   })
   .refine((v) => v.startedAt.getTime() < v.endedAt.getTime(), {
@@ -79,7 +79,7 @@ export const uploadSegmentSchema = z
       return last.offsetMs <= lengthMs;
     },
     {
-      message: "옮긴 글의 마지막 지점이 녹음 길이를 넘었습니다.",
+      message: "강의 기록의 마지막 지점이 녹음 길이를 넘었습니다.",
       path: ["blocks"],
     },
   );

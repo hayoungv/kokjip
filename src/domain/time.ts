@@ -8,7 +8,7 @@ import type { Segment } from "./types";
  * 경과 시각은 화면에서 재생 위치를 찾을 때만 계산한다.
  *
  * 실제 시각 = 기기 시각 − 시계 차이
- * 경과 시각 = 실제 시각 − 그 조각의 시작 실제 시각
+ * 경과 시각 = 실제 시각 − 그 녹음의 시작 실제 시각
  */
 
 /**
@@ -30,12 +30,12 @@ export function toDeviceTime(realTime: Date, clockOffsetMs: number): Date {
 }
 
 /**
- * 어떤 실제 시각이 이 조각의 몇 초 지점인지 돌려준다.
+ * 어떤 실제 시각이 이 녹음의 몇 초 지점인지 돌려준다.
  *
- * 그 시각이 이 조각에 담겨 있지 않으면 `null`을 돌려준다.
+ * 그 시각이 이 녹음에 담겨 있지 않으면 `null`을 돌려준다.
  * 녹음이 멈춰 소리가 없는 구간도 담기지 않은 것으로 본다.
  *
- * @returns 조각 시작부터 흐른 밀리초, 또는 담고 있지 않으면 `null`
+ * @returns 녹음 시작부터 흐른 밀리초, 또는 담고 있지 않으면 `null`
  */
 export function elapsedInSegment(
   realTime: Date,

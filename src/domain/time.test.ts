@@ -44,26 +44,26 @@ describe("toRealTime — 기기 시각을 실제 시각으로", () => {
   });
 });
 
-describe("elapsedInSegment — 실제 시각을 그 조각의 경과 시각으로", () => {
-  it("조각 시작 시각은 0이다", () => {
+describe("elapsedInSegment — 실제 시각을 그 녹음의 경과 시각으로", () => {
+  it("녹음 시작 시각은 0이다", () => {
     expect(elapsedInSegment(at("09:00"), segment("09:00", "11:00"))).toBe(0);
   });
 
-  it("조각 중간 지점을 바르게 잰다", () => {
+  it("녹음 중간 지점을 바르게 잰다", () => {
     const elapsed = elapsedInSegment(at("09:35"), segment("09:00", "11:00"));
     expect(elapsed).toBe(35 * MINUTE);
   });
 
-  it("늦게 시작한 조각에서는 그만큼 앞당겨진다", () => {
+  it("늦게 시작한 녹음에서는 그만큼 앞당겨진다", () => {
     const elapsed = elapsedInSegment(at("09:35"), segment("09:10", "11:00"));
     expect(elapsed).toBe(25 * MINUTE);
   });
 
-  it("조각이 시작하기 전 시각이면 담고 있지 않다", () => {
+  it("녹음이 시작하기 전 시각이면 담고 있지 않다", () => {
     expect(elapsedInSegment(at("08:50"), segment("09:00", "11:00"))).toBeNull();
   });
 
-  it("조각이 끝난 뒤 시각이면 담고 있지 않다", () => {
+  it("녹음이 끝난 뒤 시각이면 담고 있지 않다", () => {
     expect(elapsedInSegment(at("11:30"), segment("09:00", "11:00"))).toBeNull();
   });
 
@@ -72,12 +72,12 @@ describe("elapsedInSegment — 실제 시각을 그 조각의 경과 시각으�
     expect(elapsedInSegment(at("10:15"), seg)).toBeNull();
   });
 
-  it("멈춘 구간을 지난 뒤에는 조각 시작부터 센 값이 나온다", () => {
+  it("멈춘 구간을 지난 뒤에는 녹음 시작부터 센 값이 나온다", () => {
     const seg = segment("09:00", "12:00", [range("10:00", "10:30")]);
     expect(elapsedInSegment(at("11:00"), seg)).toBe(2 * 60 * MINUTE);
   });
 
-  it("같은 대목이 세 학습자의 녹음에서 각자의 위치로 나온다", () => {
+  it("같은 말이 세 학습자의 녹음에서 각자의 위치로 나온다", () => {
     const spokenAt = at("09:35");
 
     // 정본. 9시에 시작했다.
@@ -90,7 +90,7 @@ describe("elapsedInSegment — 실제 시각을 그 조각의 경과 시각으�
       25 * MINUTE,
     );
 
-    // 그 대목이 지난 뒤에 켠 학습자. 담고 있지 않다.
+    // 그 말이 지난 뒤에 켠 학습자. 담고 있지 않다.
     expect(elapsedInSegment(spokenAt, segment("09:40", "10:50"))).toBeNull();
   });
 });

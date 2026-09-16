@@ -30,24 +30,24 @@ describe("parseTimestamp — 시각 표기 읽기", () => {
   });
 });
 
-describe("parseTranscript — 옮긴 글 파일 읽기", () => {
+describe("parseTranscript — 강의 기록 파일 읽기", () => {
   it("머리말을 버리고 덩어리만 읽는다", () => {
     const text = [
       "[26일] 강의 STT",
       "AI로 생성된 콘텐츠입니다",
       "",
       "00:00",
-      "첫 대목의 말",
+      "첫 말의 말",
       "",
       "00:18",
-      "다음 대목의 말",
+      "다음 말의 말",
     ].join("\n");
 
     const [recording] = parseTranscript(text);
 
     expect(recording.blocks).toEqual([
-      { offsetMs: 0, text: "첫 대목의 말" },
-      { offsetMs: 18 * SECOND, text: "다음 대목의 말" },
+      { offsetMs: 0, text: "첫 말의 말" },
+      { offsetMs: 18 * SECOND, text: "다음 말의 말" },
     ]);
   });
 

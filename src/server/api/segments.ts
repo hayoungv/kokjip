@@ -5,9 +5,9 @@ import { prisma } from "@/lib/prisma";
 import type { UploadSegmentInput } from "@/validation/segment";
 
 /**
- * 조각 올리기 처리.
+ * 녹음 올리기 처리.
  *
- * 창구가 검증한 입력을 받아 회차를 찾거나 만들고, 조각을 등록하고,
+ * 창구가 검증한 입력을 받아 회차를 찾거나 만들고, 녹음을 등록하고,
  * 도메인 규칙으로 처리 대상을 산출해 판정 대기열에 넣는다.
  *
  * 업무 규칙 자체는 도메인 계층에 있다. 여기서는 그것을 불러 쓰고
@@ -18,18 +18,18 @@ export type UploadResult = {
   segmentId: string;
   sessionId: string;
   sessionDate: string;
-  /** 이 조각이 회차의 정본이 되었는지 */
+  /** 이 녹음이 회차의 정본이 되었는지 */
   isCanonical: boolean;
   /** 판정 대기열에 새로 넣은 구간 */
   queuedRanges: TimeRange[];
-  /** 이미 올라온 조각이라 다시 처리하지 않은 경우 */
+  /** 이미 올라온 녹음이라 다시 처리하지 않은 경우 */
   alreadyUploaded: boolean;
 };
 
 export async function uploadSegment(
   input: UploadSegmentInput,
 ): Promise<UploadResult> {
-  // 같은 조각을 두 번 보내도 한 번만 받는다.
+  // 같은 녹음을 두 번 보내도 한 번만 받는다.
   const existing = await prisma.recordingSegment.findUnique({
     where: {
       learnerId_clientKey: {
@@ -120,7 +120,7 @@ export async function uploadSegment(
       });
 
       // 대기열에 넣는 시점에 덮인 것으로 친다.
-      // 그래야 곧바로 올라온 다음 조각이 같은 구간을 다시 넣지 않는다.
+      // 그래야 곧바로 올라온 다음 녹음이 같은 구간을 다시 넣지 않는다.
       await tx.coveredRange.deleteMany({ where: { sessionId: session.id } });
       await tx.coveredRange.createMany({
         data: plan.nextCoveredRanges.map((r) => ({

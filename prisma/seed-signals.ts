@@ -11,11 +11,11 @@ import { parseTranscript } from "../src/domain/transcript";
  *
  * 실측 판정 결과를 넣는다.
  *
- * 선행 검증에서 사람이 확정한 강조 대목 53건을 실제 강의 전사본 위에 얹는다.
+ * 선행 검증에서 사람이 확정한 강조 말 53건을 실제 강의 전사본 위에 얹는다.
  * 지어낸 값이 아니라 측정된 값이므로, 데모에서 보이는 내용이 곧 검증 결과다.
  *
  * 쓰는 자료
- *   - 옮긴 글 원문 2개 (26일 세 교시, 27일 한 교시)
+ *   - 강의 기록 원문 2개 (26일 세 교시, 27일 한 교시)
  *   - 판정 결과 엑셀 (원래 후보 68건 + 새로 찾은 43건)
  */
 
@@ -93,7 +93,7 @@ type Signal = {
   quote: string;
 };
 
-/** 엑셀에서 사람이 확정한 대목만 뽑는다. */
+/** 엑셀에서 사람이 확정한 말만 뽑는다. */
 function readConfirmedSignals(): Signal[] {
   const book = xlsx.readFile(path.join(RESEARCH, CLASSIFICATION));
   const signals: Signal[] = [];
@@ -172,7 +172,7 @@ async function main() {
   await prisma.session.deleteMany({ where: { courseId: course.id } });
 
   const signals = readConfirmedSignals();
-  console.log(`사람이 확정한 대목 ${signals.length}건을 읽었습니다.`);
+  console.log(`사람이 확정한 말 ${signals.length}건을 읽었습니다.`);
 
   let matched = 0;
   let unmatched = 0;
@@ -256,7 +256,7 @@ async function main() {
       }
 
       console.log(
-        `  ${day} ${period}교시 — 덩어리 ${recording.blocks.length}개 · 강조 대목 ${mine.length}건`,
+        `  ${day} ${period}교시 — 덩어리 ${recording.blocks.length}개 · 강조 말 ${mine.length}건`,
       );
     }
   }
@@ -268,7 +268,7 @@ async function main() {
     orderBy: { _count: { type: "desc" } },
   });
 
-  console.log(`\n넣은 강조 대목 ${total}건`);
+  console.log(`\n넣은 강조 말 ${total}건`);
   console.log(`  인용문이 원문과 맞은 것 ${matched}건 / 못 찾은 것 ${unmatched}건`);
   console.log("  유형별: " + byType.map((r) => `${r.type} ${r._count}`).join(" · "));
 }

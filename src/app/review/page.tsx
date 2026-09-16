@@ -55,7 +55,7 @@ export default async function ReviewIndexPage() {
                   </div>
 
                   <p className="mt-2 text-xs text-muted">
-                    녹음 {session._count.segments}개 · 먼저 볼 대목{" "}
+                    녹음 {session._count.segments}개 · 강조한 말{" "}
                     <b className="text-brand">{session._count.highlights}개</b>
                   </p>
                 </Link>

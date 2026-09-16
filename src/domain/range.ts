@@ -52,7 +52,7 @@ export function mergeRanges(ranges: TimeRange[]): TimeRange[] {
 /**
  * 한 구간에서 다른 구간들을 빼고 남은 것을 돌려준다.
  *
- * 새로 올라온 조각에서 이미 처리한 구간을 빼낼 때 쓴다.
+ * 새로 올라온 녹음에서 이미 처리한 구간을 빼낼 때 쓴다.
  */
 export function subtractRanges(
   target: TimeRange,
@@ -89,7 +89,7 @@ export function subtractRanges(
 }
 
 /**
- * 조각에서 실제로 소리가 있는 구간을 돌려준다.
+ * 녹음에서 실제로 소리가 있는 구간을 돌려준다.
  *
  * 녹음이 중간에 멈춘 구간은 빼낸다.
  */

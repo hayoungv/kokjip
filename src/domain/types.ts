@@ -13,7 +13,7 @@ export type TimeRange = {
   toAt: Date;
 };
 
-/** 녹음 조각. 판정에 필요한 것만 담는다. */
+/** 녹음. 판정에 필요한 것만 담는다. */
 export type Segment = {
   /** 녹음이 시작된 실제 시각 */
   startedAt: Date;

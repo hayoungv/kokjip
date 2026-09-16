@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
+import { hashPassword } from "../src/lib/password";
 
 /**
  * 개발용 씨앗 데이터.
@@ -46,14 +47,15 @@ async function main() {
   });
 
   // 기관 담당자. 리서치 문서의 페르소나를 쓴다.
+  const passwordHash = await hashPassword("kokjip");
   await prisma.institutionAdmin.upsert({
     where: { email: "admin@example.com" },
     create: {
       institutionId: institution.id,
       email: "admin@example.com",
-      passwordHash: "seed-not-a-real-hash",
+      passwordHash,
     },
-    update: {},
+    update: { passwordHash },
   });
 
   // 학습자. 김지원은 리서치 문서의 페르소나이고,

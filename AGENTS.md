@@ -264,3 +264,13 @@ SRS에 넣는 그림은 **일곱 개**다. 이름표는 모두 한국어로 쓴�
 - 고르는 기준은 **그 그림이 없으면 글로 설명하기 어려운가**다. 형식을 갖추기 위한 그림을 넣지 않는다.
 - 유스케이스도·클래스도·컴포넌트도·상태 전이도·검증 전략 흐름도·외부 시스템 격리 경계도는 **넣지 않는다.**
 - **만드는 단계를 그림에 섞지 않는다.** 대신 요구사항 목록에 단계 칸을 두어 1단계 여부를 표시한다.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

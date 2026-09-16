@@ -80,25 +80,31 @@ flowchart TB
 | 표 | 주요 열 |
 |---|---|
 | `Institution` | `id`, `name`, `createdAt` |
+| `InstitutionAdmin` | `id`, `institutionId`, `email`, `passwordHash`, `createdAt` |
 | `Course` | `id`, `institutionId`, `name`, `startDate`, `endDate`, `capacity`, `instructorId` |
 | `Instructor` | `id`, `name`, `email` |
 | `RecordingConsent` | `id`, `instructorId`, `courseId`, `consentedAt`, `tokenHash`, `tokenExpiresAt` |
 | `Learner` | `id`, `name`, `email`, `googleSubject`, `joinedAt` |
+| `Invite` | `id`, `courseId`, `email`, `name`, `acceptedAt`, `createdAt` |
 | `Enrollment` | `id`, `courseId`, `learnerId`, `joinedOn`, `leftOn` |
 | `Session` | `id`, `courseId`, `date`, `blockedAt` |
-| `RecordingSegment` | `id`, `sessionId`, `learnerId`, `startedAt`, `endedAt`, `gaps`, `clockOffsetMs`, `isCanonical` |
+| `RecordingSegment` | `id`, `sessionId`, `learnerId`, `clientKey`, `startedAt`, `endedAt`, `gaps`, `clockOffsetMs`, `isCanonical` |
 | `Transcript` | `id`, `segmentId`, `blocks`, `createdAt` |
 | `CoveredRange` | `id`, `sessionId`, `fromAt`, `toAt` |
 | `Highlight` | `id`, `sessionId`, `type`, `quote`, `occurredAt`, `sourceSegmentId` |
 | `ListView` | `id`, `learnerId`, `sessionId`, `viewedAt` |
 | `AudioIntake` | `id`, `segmentId`, `receivedAt`, `deletedAt` |
-| `JudgementBatch` | `id`, `externalId`, `submittedAt`, `completedAt`, `inputTokens`, `outputTokens`, `cost` |
+| `JudgementBatch` | `id`, `externalId`, `submittedAt`, `completedAt`, `inputTokens`, `outputTokens`, `costKrw` |
 
 ## 3-2. 설계상 중요한 세 가지
 
 **`CoveredRange`가 중복 처리를 막는다.** 한 회차에서 이미 글로 옮기고 판정까지 마친 구간을 실제 시각 범위로 기록한다. 새 조각이 올라오면 그 조각의 범위에서 이미 덮인 범위를 빼고 남은 부분만 처리한다. 이것이 REQ-FUNC-007을 만족하는 장치다.
 
 **`Transcript.blocks`는 시각이 붙은 글 조각의 배열이다.** 각 항목은 시작 실제 시각과 글을 갖는다. 화자 항목은 없다. REQ-DATA-003에 따라 화자 정보를 만들지 않는다.
+
+**`InstitutionAdmin`과 `Invite`는 구현하며 드러난 표다.** 훈련기관 담당자가 이메일과 비밀번호로 들어오려면 담당자 계정을 담을 곳이 필요하고, 명단에 있는 이메일로 로그인한 사람만 들어오게 하려면 명단을 담을 곳이 필요하다. 두 요구사항이 표를 요구하는데 처음 표 목록에서 빠져 있었다.
+
+**`RecordingSegment.clientKey`도 같은 경우다.** 같은 조각을 두 번 보내도 한 번만 받으려면 앱이 만든 식별자가 필요하다.
 
 **`Highlight.occurredAt`은 실제 시각이다.** 어느 조각에서 나왔는지는 `sourceSegmentId`로 남기지만, 화면에서 위치를 계산할 때는 보는 사람의 조각을 기준으로 다시 계산한다.
 

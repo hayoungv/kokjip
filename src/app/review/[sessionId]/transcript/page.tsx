@@ -31,7 +31,7 @@ export default async function TranscriptPage({
   const totalBlocks = segments.reduce((sum, s) => sum + s.blocks.length, 0);
 
   return (
-    <PhoneFrame section="강의 기록 전체" back={`/review/${sessionId}`}>
+    <PhoneFrame section="강의 기록 전체" back={`/review/${sessionId}`} tab="/review">
       <p className="text-xl font-bold text-navy">강의 기록 전체</p>
       <p className="mt-1 text-xs text-muted">
         덩어리 {totalBlocks.toLocaleString()}개 · 화자를 구분하지 않습니다

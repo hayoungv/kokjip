@@ -9,15 +9,23 @@ import Link from "next/link";
  * 틀 자체는 보여 주기 위한 것이고 앱에는 들어가지 않는다.
  */
 
+/** 앱 아래쪽 탭. */
+const TABS = [
+  { href: "/review", label: "수업", mark: "▤" },
+  { href: "/upload", label: "녹음", mark: "●" },
+] as const;
+
 type Props = {
   /** 앱 화면 상단에 붙는 이름 */
   section: string;
-  /** 뒤로 가는 곳. 없으면 뒤로 가기가 나오지 않는다 */
+  /** 뒤로 가는 곳. 없으면 뒤로 가기 대신 아이콘이 나온다 */
   back?: string;
+  /** 아래쪽 탭에서 지금 자리를 표시할 주소 */
+  tab?: (typeof TABS)[number]["href"];
   children: React.ReactNode;
 };
 
-export function PhoneFrame({ section, back, children }: Props) {
+export function PhoneFrame({ section, back, tab, children }: Props) {
   return (
     <div className="flex flex-1 flex-col items-center px-4 py-8">
       <p className="mb-4 text-xs text-muted">
@@ -40,7 +48,7 @@ export function PhoneFrame({ section, back, children }: Props) {
             <Link
               href={back}
               aria-label="뒤로"
-              className="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-navy"
+              className="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-lg text-navy"
             >
               <span aria-hidden>‹</span>
             </Link>
@@ -59,12 +67,33 @@ export function PhoneFrame({ section, back, children }: Props) {
         </div>
 
         {/* 앱 본문 */}
-        <div className="h-[680px] overflow-y-auto overscroll-contain px-4 py-4">
+        <div className="h-[640px] overflow-y-auto overscroll-contain px-4 py-4">
           {children}
         </div>
 
+        {/* 아래쪽 탭 */}
+        <nav className="grid grid-cols-2 border-t border-line bg-surface">
+          {TABS.map((item) => {
+            const here = tab === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex flex-col items-center gap-0.5 py-2.5 text-[11px] ${
+                  here ? "font-semibold text-brand" : "text-muted"
+                }`}
+              >
+                <span aria-hidden className="text-sm">
+                  {item.mark}
+                </span>
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
         {/* 아래쪽 손잡이 */}
-        <div className="flex justify-center bg-surface py-2">
+        <div className="flex justify-center bg-surface pb-2">
           <span className="h-1 w-28 rounded-full bg-line" />
         </div>
       </div>

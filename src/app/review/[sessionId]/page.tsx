@@ -48,7 +48,7 @@ export default async function ReviewPage({
   }
 
   return (
-    <PhoneFrame section="오늘의 복습" back="/review">
+    <PhoneFrame section="오늘의 복습" back="/review" tab="/review">
       <ReviewList
         sessionId={day.sessionId}
         dateLabel={dateLabel(day.date)}

@@ -22,7 +22,7 @@ export default async function ReviewIndexPage() {
   const sessions = learner ? await listSessions(learner.id) : [];
 
   return (
-    <PhoneFrame section="내 수업">
+    <PhoneFrame section="내 수업" tab="/review">
       <h1 className="text-xl font-bold text-navy">복습할 수업</h1>
       <p className="mt-1 text-sm text-muted">
         {learner ? `${learner.name}님의 수업입니다.` : "학습자가 없습니다."}

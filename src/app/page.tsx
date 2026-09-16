@@ -60,7 +60,7 @@ export default async function Home() {
                 href="/review"
                 className="flex items-center justify-between rounded-lg bg-brand px-4 py-3 text-sm font-medium text-white"
               >
-                복습할 수업 보기
+                학습자 화면 — 복습 순서와 다시 듣기
                 <span aria-hidden>&gt;</span>
               </Link>
             </li>
@@ -69,7 +69,7 @@ export default async function Home() {
                 href="/upload"
                 className="flex items-center justify-between rounded-lg bg-brand-soft px-4 py-3 text-sm font-medium text-brand"
               >
-                강의 기록 올리기
+                학습자 화면 — 오늘 강의 올리기
                 <span aria-hidden>&gt;</span>
               </Link>
             </li>

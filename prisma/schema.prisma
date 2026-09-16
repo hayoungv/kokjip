@@ -140,6 +140,7 @@ model Session {
   coveredRanges CoveredRange[]
   highlights    Highlight[]
   listViews     ListView[]
+  tasks         JudgementTask[]
 
   @@unique([courseId, date])
 }
@@ -162,6 +163,7 @@ model RecordingSegment {
   transcript  Transcript?
   audioIntake AudioIntake?
   highlights  Highlight[]
+  tasks       JudgementTask[]
 
   @@unique([learnerId, clientKey])
   @@index([sessionId])
@@ -256,4 +258,31 @@ enum HighlightType {
   RATIONALE
   INSIGHT
   REVIEW
+}
+
+/// 판정 대기열. 처리해야 할 구간 하나가 한 줄이다.
+model JudgementTask {
+  id              String     @id @default(cuid())
+  sessionId       String
+  sourceSegmentId String
+  fromAt          DateTime
+  toAt            DateTime
+  status          TaskStatus @default(PENDING)
+  batchId         String?
+  createdAt       DateTime   @default(now())
+  completedAt     DateTime?
+
+  session       Session          @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sourceSegment RecordingSegment @relation(fields: [sourceSegmentId], references: [id], onDelete: Cascade)
+
+  @@index([status, createdAt])
+  @@index([sessionId])
+}
+
+/// 판정 대기열의 상태.
+enum TaskStatus {
+  PENDING
+  SUBMITTED
+  DONE
+  FAILED
 }

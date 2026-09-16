@@ -7,6 +7,8 @@ import { PrismaClient } from "../src/generated/prisma/client";
 import { parseTranscript } from "../src/domain/transcript";
 
 /**
+ * 실측 판정 결과 seed.
+ *
  * 실측 판정 결과를 넣는다.
  *
  * 선행 검증에서 사람이 확정한 강조 대목 53건을 실제 강의 전사본 위에 얹는다.

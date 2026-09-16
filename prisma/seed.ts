@@ -4,7 +4,7 @@ import { PrismaClient } from "../src/generated/prisma/client";
 import { hashPassword } from "../src/lib/password";
 
 /**
- * 개발용 씨앗 데이터.
+ * 개발용 seed 데이터.
  *
  * 훈련기관 하나, 과정 하나, 강사 하나, 학습자 둘을 넣는다.
  * 실제 데이터가 아니라 화면을 만들며 확인하기 위한 것이다.
@@ -113,7 +113,7 @@ async function main() {
     update: {},
   });
 
-  console.log("씨앗 데이터를 넣었습니다.");
+  console.log("seed 데이터를 넣었습니다.");
   console.log(`  훈련기관: ${institution.name}`);
   console.log(`  과정: ${course.name} (정원 ${course.capacity}명)`);
   console.log(`  강사: ${instructor.name} — 녹음 허용 완료`);

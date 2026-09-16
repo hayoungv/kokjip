@@ -22,7 +22,7 @@ export default async function UploadPage() {
         <h1 className="text-xl font-bold text-navy">과정이 없습니다</h1>
         <p className="mt-2 text-sm text-muted">
           먼저 <code className="rounded bg-canvas px-1">npm run db:seed</code>
-          를 실행해 개발용 자료를 넣어 주세요.
+          를 실행해 seed 데이터를 넣어 주세요.
         </p>
       </main>
     );

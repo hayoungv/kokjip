@@ -303,3 +303,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 | 결정이 요구하는 것 | 재개방·수정·반영 이력 |
 
 문서 헤더의 버전 번호는 현재 상태이므로 유지한다. 변경 이력이 필요하면 깃 커밋 메시지에 남긴다.
+
+### 7-1. 용어
+
+개발용으로 미리 넣어 두는 자료는 **seed**라고 부른다. "씨앗 데이터"처럼 옮겨 쓰지 않는다.
+
+`prisma/seed.ts`는 지어낸 예시(기관·과정·강사·학습자)를 넣고, `prisma/seed-signals.ts`는 실측 판정 결과 53건과 실제 강의 전사본을 넣는다.

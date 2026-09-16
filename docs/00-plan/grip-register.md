@@ -62,7 +62,7 @@ RESOLVED: 9 / DROPPED: 0 / TOTAL: 9
 
 ## 토픽
 
-RESOLVED: 10 / DROPPED: 0 / TOTAL: 11 (2회차)
+RESOLVED: 11 / DROPPED: 0 / TOTAL: 11 (2회차)
 
 - [x] S1 | CORE  | 학습자가 쓰는 실행 형태 | depends:-              | status:RESOLVED | decision:학습자는 휴대폰 설치형 앱, 기관·강사는 웹 화면 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-1
 - [x] S2 | CORE  | 녹음을 앱이 직접 하는가, 외부 파일을 받는가 | depends:S1             | status:RESOLVED | decision:앱이 직접 녹음, 외부 파일 가져오기 없음 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-2
@@ -74,7 +74,7 @@ RESOLVED: 10 / DROPPED: 0 / TOTAL: 11 (2회차)
 - [x] S7 | CORE  | 확정 기술 스택과 금지 스택 | depends:S1,S2,S3,S4,S6 | status:RESOLVED | decision:Next.js 단일 풀스택 + Kotlin·Compose 안드로이드 전용 앱, Claude 묶음 호출 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-10 | note:aztks apply로 결정
 - [x] S8 | MINOR | SRS 문서 규약 | depends:-              | status:RESOLVED | decision:요구사항 번호+근거+수용 기준, 한국어 본문, 코드 식별자는 부록 표 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-9
 - [x] S11 | CORE  | 만드는 순서와 데모 단계의 범위 | depends:S7             | status:RESOLVED | decision:웹 먼저 데모, 그다음 안드로이드 앱, 서버 공용 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-11
-- [ ] S9 | MINOR | SRS에 넣을 다이어그램                            | depends:S7             | status:UNRESOLVED | note:aztks 스킬로 진행
+- [x] S9 | MINOR | SRS에 넣을 다이어그램 | depends:S7             | status:RESOLVED | decision:7개 선정, 6종 제외, 라벨 한국어, 단계는 그림에 섞지 않음 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-12 | note:aztks apply로 결정
 
 ## 재개방 — 2026-09-16
 
@@ -86,3 +86,7 @@ RESOLVED: 10 / DROPPED: 0 / TOTAL: 11 (2회차)
 ## T4 재개방 종결 — 2026-09-16
 
 S4에서 기기 전사를 기본 경로로 확정해 1인당 원가가 430원 수준으로 내려갔다. 1인 월 3,000원이 성립하므로 **T4를 고치지 않고 그대로 유지한다.** 재개방을 종결한다.
+
+## 2회차 종료 — 2026-09-16
+
+토픽 11건이 모두 해소됐다. SRS 착수 조건이 충족됐다.

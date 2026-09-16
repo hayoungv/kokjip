@@ -6,6 +6,8 @@
 
 국비 지원 훈련 과정(KDT)의 수강생이 대상입니다. 강의를 녹음해 글로 옮기고, **강사가 실무 중요도나 면접 빈출을 직접 말한 대목**을 찾아내, 학습 자료의 **목차 항목을 우선 학습할 순으로** 보여줍니다.
 
+**데모: <https://kokjip-prd-to-srs-psi.vercel.app>**
+
 > 지금 저장소는 **1단계 웹 데모**입니다. 학습자가 쓰는 것은 안드로이드 앱이며 2단계에서 만듭니다. 웹에서 학습자 화면을 열면 앱에서 보이는 모양 그대로 보이도록 휴대폰 틀 안에 넣어 두었습니다. 앱에서는 녹음 버튼을 누르면 기기가 녹음하고 기기 안에서 글로 옮겨 스스로 올리지만, 웹에는 마이크가 없으므로 이미 글로 옮긴 파일을 골라 그 자리를 대신합니다.
 
 ---
@@ -62,11 +64,16 @@ npm run dev
 | 강사 | `/instructor/[주소]` 동의 · `/material` 학습 자료와 목차 · `/sessions` 회차 차단 | 계정 없이 전용 주소로만 |
 | 훈련기관 | `/institution` 뒤처지는 수강생 | 이메일과 비밀번호 |
 
-seed를 넣으면 다음으로 걸어 볼 수 있습니다.
+배포된 데모에서 바로 걸어 볼 수 있습니다.
 
-- 강사 화면 — `/instructor/seed-instructor-token`
-- 훈련기관 — `admin@example.com` / `kokjip`
-- 동의 화면까지 — 훈련기관에서 "데이터 분석 실무 과정"의 `안내 보내기`를 누르면 주소가 나옵니다
+| 들어가는 곳 | 주소 |
+|---|---|
+| 학습자 — 복습 순서 | <https://kokjip-prd-to-srs-psi.vercel.app/review> |
+| 학습자 — 오늘 강의 올리기 | <https://kokjip-prd-to-srs-psi.vercel.app/upload> |
+| 강사 — 학습 자료와 회차 차단 | <https://kokjip-prd-to-srs-psi.vercel.app/instructor/seed-instructor-token> |
+| 훈련기관 — 뒤처지는 수강생 | <https://kokjip-prd-to-srs-psi.vercel.app/institution/login> |
+
+훈련기관은 `admin@example.com` / `kokjip`으로 들어갑니다. 강사가 동의하는 장면까지 보시려면 훈련기관 화면에서 "데이터 분석 실무 과정"의 `안내 보내기`를 누르시면 됩니다. 발송 서비스를 붙이지 않았으므로 전용 주소가 화면에 그대로 나옵니다.
 
 ---
 
@@ -160,7 +167,7 @@ prisma/              데이터 모델 · 마이그레이션 · seed
 | W5 판정 연결과 예약 작업 | 예약 작업만 완료 |
 | W6 복습 순서 화면 | 완료 |
 | W7 훈련기관 화면 | 완료 |
-| W8 배포 | 진행 중 |
+| W8 배포 | 완료 — Vercel + Supabase 무료 구간 |
 | V1 · A1~A6 인식기 확인과 앱 | 진행 전 |
 
 단위 시험 155개가 통과합니다.

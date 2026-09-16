@@ -62,9 +62,9 @@ RESOLVED: 9 / DROPPED: 0 / TOTAL: 9
 
 ## 토픽
 
-RESOLVED: 0 / DROPPED: 0 / TOTAL: 9 (2회차)
+RESOLVED: 1 / DROPPED: 0 / TOTAL: 9 (2회차)
 
-- [ ] S1 | CORE  | 학습자가 쓰는 실행 형태                          | depends:-              | status:UNRESOLVED
+- [x] S1 | CORE  | 학습자가 쓰는 실행 형태 | depends:-              | status:RESOLVED | decision:학습자는 휴대폰 설치형 앱, 기관·강사는 웹 화면 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-1
 - [ ] S2 | CORE  | 녹음을 앱이 직접 하는가, 외부 파일을 받는가       | depends:S1             | status:UNRESOLVED
 - [ ] S3 | CORE  | 음성이 서버를 거치는가 — 미보관 규칙의 해석       | depends:S2             | status:UNRESOLVED
 - [ ] S4 | CORE  | 전사와 판정에 쓰는 외부 서비스, 그리고 원가 상한  | depends:S3             | status:UNRESOLVED

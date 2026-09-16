@@ -62,14 +62,22 @@ RESOLVED: 9 / DROPPED: 0 / TOTAL: 9
 
 ## 토픽
 
-RESOLVED: 3 / DROPPED: 0 / TOTAL: 9 (2회차)
+RESOLVED: 3 / DROPPED: 0 / TOTAL: 10 (2회차)
 
 - [x] S1 | CORE  | 학습자가 쓰는 실행 형태 | depends:-              | status:RESOLVED | decision:학습자는 휴대폰 설치형 앱, 기관·강사는 웹 화면 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-1
 - [x] S2 | CORE  | 녹음을 앱이 직접 하는가, 외부 파일을 받는가 | depends:S1             | status:RESOLVED | decision:앱이 직접 녹음, 외부 파일 가져오기 없음 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-2
 - [x] S3 | CORE  | 음성이 서버를 거치는가 — 미보관 규칙의 해석 | depends:S2             | status:RESOLVED | decision:거치되 두지 않음, 전사 후 즉시 삭제·실패 시 24시간 상한 | applied:docs/01-prd/prd.md, docs/00-plan/product-decisions.md, AGENTS.md §6-3
-- [ ] S4 | CORE  | 전사와 판정에 쓰는 외부 서비스, 그리고 원가 상한  | depends:S3             | status:UNRESOLVED
+- [ ] S10 | CORE  | 회차당 정본 선정과 발화 지점 환산                 | depends:S2             | status:UNRESOLVED
+- [ ] S4 | CORE  | 전사와 판정에 쓰는 외부 서비스, 그리고 원가 상한  | depends:S3,S10             | status:UNRESOLVED
 - [ ] S5 | CORE  | 처리 완료 시점 요구                              | depends:S4             | status:UNRESOLVED
 - [ ] S6 | CORE  | 계정과 인증 방식                                 | depends:S1             | status:UNRESOLVED
 - [ ] S7 | CORE  | 확정 기술 스택과 금지 스택                       | depends:S1,S2,S3,S4,S6 | status:UNRESOLVED | note:aztks 스킬로 진행
 - [ ] S8 | MINOR | SRS 문서 규약                                    | depends:-              | status:UNRESOLVED
 - [ ] S9 | MINOR | SRS에 넣을 다이어그램                            | depends:S7             | status:UNRESOLVED | note:aztks 스킬로 진행
+
+## 재개방 — 2026-09-16
+
+`cost-model.md`의 원가 계산 결과로 다음 두 가지가 생겼다.
+
+- **S10 신설** — 회차당 한 벌만 전사하는 것이 제품 성립 조건으로 드러났다. 정본 선정과 발화 지점 환산을 정해야 한다.
+- **T4 재개방** — 1회차에서 확정한 1인 월 3,000원이 원가를 덮지 못한다. S4에서 원가가 확정된 뒤 단가를 다시 정한다. 1회차 분모는 그대로 두고 이 항목만 다시 연다.

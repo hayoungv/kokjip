@@ -26,12 +26,13 @@ export default async function Home() {
       <BrandHeader />
 
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
-        <h1 className="text-2xl font-bold tracking-tight text-navy">
-          강사가 강조한 대목부터 복습합니다
+        <h1 className="text-3xl font-bold tracking-tight text-navy">
+          강의에서 다시 볼 것만 콕.
         </h1>
-        <p className="mt-2 text-sm text-muted">
-          강의 녹음에서 강사가 실무 중요도를 직접 말한 대목을 찾아 복습 순서를
-          정해 줍니다.
+        <p className="mt-3 text-sm leading-relaxed text-muted">
+          콕집은 매일 쌓이는 강의를 처음부터 다시 볼 필요 없이, 지금 다시 봐야
+          할 내용만 골라 필요한 부분부터 효율적으로 복습할 수 있도록 도와주는
+          학습 서비스입니다.
         </p>
 
         <section className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-5">

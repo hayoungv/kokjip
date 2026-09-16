@@ -274,3 +274,12 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+### 6-13. 확정 문구
+
+바깥에 내보이는 문장은 [`docs/00-plan/copy.md`](docs/00-plan/copy.md)에 있다. **글자 그대로 쓴다.**
+
+- 카피 문구: 강의에서 다시 볼 것만 콕.
+- 서비스 설명: 콕집은 매일 쌓이는 강의를 처음부터 다시 볼 필요 없이, 지금 다시 봐야 할 내용만 골라 필요한 부분부터 효율적으로 복습할 수 있도록 도와주는 학습 서비스입니다.
+
+줄이거나 바꿔 쓰지 않는다. 쓰지 않는 말의 목록도 같은 문서에 있다.

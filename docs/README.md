@@ -19,6 +19,8 @@
 | [`grip-register.md`](00-plan/grip-register.md) | 미해소 토픽과 해소 현황을 추적하는 결정 기록부 |
 | [`product-decisions.md`](00-plan/product-decisions.md) | 확정된 결정 9건의 내용과 근거 |
 | [`pricing-simulation.md`](00-plan/pricing-simulation.md) | 과금 단위 비교 계산과 사실 확인 결과 |
+| [`cost-model.md`](00-plan/cost-model.md) | 원가가 붙는 경로와 계산 |
+| [`copy.md`](00-plan/copy.md) | 바깥에 내보이는 확정 문구 |
 
 ## 입력 문서 (`00-plan/references/`)
 

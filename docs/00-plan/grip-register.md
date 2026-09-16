@@ -62,7 +62,7 @@ RESOLVED: 9 / DROPPED: 0 / TOTAL: 9
 
 ## 토픽
 
-RESOLVED: 7 / DROPPED: 0 / TOTAL: 10 (2회차)
+RESOLVED: 8 / DROPPED: 0 / TOTAL: 10 (2회차)
 
 - [x] S1 | CORE  | 학습자가 쓰는 실행 형태 | depends:-              | status:RESOLVED | decision:학습자는 휴대폰 설치형 앱, 기관·강사는 웹 화면 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-1
 - [x] S2 | CORE  | 녹음을 앱이 직접 하는가, 외부 파일을 받는가 | depends:S1             | status:RESOLVED | decision:앱이 직접 녹음, 외부 파일 가져오기 없음 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-2
@@ -72,7 +72,7 @@ RESOLVED: 7 / DROPPED: 0 / TOTAL: 10 (2회차)
 - [x] S5 | CORE  | 처리 완료 시점 요구 | depends:S4             | status:RESOLVED | decision:업로드 뒤 1시간 상한, 묶음 처리, 부분 처리와 알림 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-6
 - [x] S6 | CORE  | 계정과 인증 방식 | depends:S1             | status:RESOLVED | decision:학습자는 초대 링크+번호 확인, 강사는 전용 주소, 기관은 이메일·비밀번호 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-7
 - [ ] S7 | CORE  | 확정 기술 스택과 금지 스택                       | depends:S1,S2,S3,S4,S6 | status:UNRESOLVED | note:aztks 스킬로 진행
-- [ ] S8 | MINOR | SRS 문서 규약                                    | depends:-              | status:UNRESOLVED
+- [x] S8 | MINOR | SRS 문서 규약 | depends:-              | status:RESOLVED | decision:요구사항 번호+근거+수용 기준, 한국어 본문, 코드 식별자는 부록 표 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-9
 - [ ] S9 | MINOR | SRS에 넣을 다이어그램                            | depends:S7             | status:UNRESOLVED | note:aztks 스킬로 진행
 
 ## 재개방 — 2026-09-16

@@ -1,137 +1,79 @@
-# 결정 기록부 (Grip Register)
+# 결정 기록부
 
-> PRD 착수 전에 확정해야 할 결정을 한 곳에 모아 추적한다.
-> 참조 범위: `docs/00-plan/references/vps-v2-0-rooted.md` · `docs/00-plan/references/signal-validation-summary.md`
-> 관심 방향: 소비자를 개인 학습자에서 훈련기관으로 재설정하는 축 전환과, 그에 따른 표적 고객 · 핵심 가치 · 최소 기능 범위 · 과금 구조의 재정의
-> 완료 조건: 아래 토픽 전부 RESOLVED 또는 DROPPED
-> 반영 대상: 근거 문서 `docs/00-plan/` · 규범 문서 `AGENTS.md`
+착수 전에 확정한 결정을 한 곳에 모아 둔다.
 
----
-
-## 재료 점검 — 2026-09-14
-
-| 역할 | 상태 | 근거 |
-|---|---|---|
-| R1 목적 · 성공 기준 | 충족 | `vps-v2-0-rooted.md` §1-1 한 줄 포지셔닝, §11 종합 판정 |
-| R2 범위 · 산출물 정의 | 충족 | `vps-v2-0-rooted.md` §8 최소 기능 범위와 제외 범위 |
-| R3 대상 · 이해관계자 | 부분 | §2-1에 세 주체가 정의되어 있으나 개인 학습자 기준이며, 기관 중심 전환 시 위상이 바뀜 → T1로 흡수 |
-| R4 제약조건 | 부분 | §9-3 데이터 보호 원칙과 단가 격차만 있고 운영 규칙 미정 → T7로 흡수 |
-| R5 현재 진척 · 기결정 | 충족 | `signal-validation-summary.md` 신호 밀도 게이트 통과, 분류기 v0.2 성능 |
-
-추출 기준선(R1 · R2)이 충족되어 게이트를 발동하지 않고 토픽 추출로 진행한다.
+| | |
+|---|---|
+| 결정의 내용과 근거 | [`product-decisions.md`](product-decisions.md) |
+| 이후 작업을 구속하는 항목 | [`../../AGENTS.md`](../../AGENTS.md) §5 · §6 |
+| 미해소 항목 | 없음 |
 
 ---
-
-## 토픽
-
-RESOLVED: 9 / DROPPED: 0 / TOTAL: 9
-
-- [x] T1 | CORE  | 제품을 직접 쓰는 주체와 값을 지불하는 주체의 위상 | depends:-        | status:RESOLVED | decision:기관이 구매하고 학습자가 사용한다 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-1
-- [x] T2 | CORE  | 훈련기관이 이 제품을 구매하는 이유(핵심 가치) | depends:T1       | status:RESOLVED | decision:1순위 중도 탈락 감소, 2순위 취업률 방어 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-2
-- [x] T3 | CORE  | 강의 음성 데이터의 획득 경로와 강사 동의 절차 | depends:T1       | status:RESOLVED | decision:학습자 당일 업로드·원본은 기기에만·강사 동의는 제품이 직접 수집 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-3
-- [x] T4 | CORE  | 과금 단위와 계약 형태 | depends:T2       | status:RESOLVED | decision:재적 인원 기준 월별 청구, 1인 1개월 3,000원 | applied:docs/00-plan/product-decisions.md, docs/00-plan/pricing-simulation.md, AGENTS.md §5-4
-- [x] T5 | CORE  | 신호 판정의 품질 기준선(오탐과 미탐의 우선순위) | depends:T2       | status:RESOLVED | decision:정밀도 우선, 재현율 하한 88.7% | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-5
-- [x] T6 | CORE  | 최소 기능 범위 재확정 | depends:T2,T3,T5 | status:RESOLVED | decision:학습자 화면 전부+강사 동의+기관 화면 1종, 관리 업무는 수동 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-6
-- [x] T7 | CORE  | 개인정보와 저작권 운영 규칙의 확정 수준 | depends:T3       | status:RESOLVED | decision:질의응답 포함 전사·강사 외 화자는 무기명 단일 표시·전사본 과정 종료 후 6개월 보관 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-8
-- [x] T9 | CORE  | 뒤처짐을 무엇으로 판정하는가 | depends:T6       | status:RESOLVED | decision:복습 목록 미열람 3일 연속(강의가 올라온 날 기준) | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-7
-- [x] T8 | MINOR | 제품 문서에서 쓰는 용어 표기 기준 | depends:T6       | status:RESOLVED | decision:본문은 한국어 표기만, 코드 식별자는 SRS에서 정의 | applied:docs/00-plan/product-decisions.md, AGENTS.md §5-9
-
----
-
-## 종료 — 2026-09-14
-
-토픽 9건이 모두 해소됐다. PRD 착수 조건이 충족됐다.
-
----
-
-# 2회차 — SRS 착수 전 (2026-09-14)
-
-> 참조 범위: `docs/01-prd/prd.md` · `docs/00-plan/product-decisions.md` · `AGENTS.md` · 선행 프로젝트(핀프렌즈)의 확정 기술 스택
-> 관심 방향: SRS를 쓰기 전에 확정해야 할 기술 결정과 문서 규약
-> 반영 대상: 근거 문서 `docs/00-plan/` · 규범 문서 `AGENTS.md`
 
 ## 재료 점검
 
 | 역할 | 상태 | 근거 |
 |---|---|---|
-| R1 목적 · 성공 기준 | 충족 | PRD 1장, 13장 |
-| R2 범위 · 산출물 정의 | 충족 | PRD 6~8장 |
-| R3 대상 · 이해관계자 | 충족 | PRD 3장 |
-| R4 제약조건 | 부분 | PRD 9~11장에 품질·데이터·과금 제약은 있으나 인프라 비용과 기기 저장 제약이 없다. S4와 S1로 흡수 |
-| R5 현재 진척 · 기결정 | 충족 | `product-decisions.md` 결정 9건 |
+| R1 목적 · 성공 기준 | 충족 | 가치 제안 문서 §1-1, §11 |
+| R2 범위 · 산출물 정의 | 충족 | 가치 제안 문서 §8 |
+| R3 대상 · 이해관계자 | 부분 | 세 주체가 정의되어 있으나 개인 학습자 기준이다. T1로 흡수 |
+| R4 제약조건 | 부분 | 데이터 보호 원칙과 단가 격차만 있고 운영 규칙이 없다. T7과 S4로 흡수 |
+| R5 현재 진척 · 기결정 | 충족 | 신호 검증 결과 문서 |
 
-## 토픽
+---
 
-RESOLVED: 11 / DROPPED: 0 / TOTAL: 11 (2회차)
+## 제품 결정
 
-- [x] S1 | CORE  | 학습자가 쓰는 실행 형태 | depends:-              | status:RESOLVED | decision:학습자는 휴대폰 설치형 앱, 기관·강사는 웹 화면 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-1
-- [x] S2 | CORE  | 녹음을 앱이 직접 하는가, 외부 파일을 받는가 | depends:S1             | status:RESOLVED | decision:앱이 직접 녹음, 외부 파일 가져오기 없음 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-2
-- [x] S3 | CORE  | 음성이 서버를 거치는가 — 미보관 규칙의 해석 | depends:S2             | status:RESOLVED | decision:거치되 두지 않음, 전사 후 즉시 삭제·실패 시 24시간 상한 | applied:docs/01-prd/prd.md, docs/00-plan/product-decisions.md, AGENTS.md §6-3
-- [x] S10 | CORE  | 회차당 정본 선정과 발화 지점 환산 | depends:S2             | status:RESOLVED | decision:첫 업로드를 즉시 기준으로, 미포함 구간만 추가 전사, 발화 지점은 실제 시각 저장 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-4
-- [x] S4 | CORE  | 전사와 판정에 쓰는 외부 서비스, 그리고 원가 상한 | depends:S3,S10 | status:RESOLVED | decision:녹음과 동시에 기기 내 전사, 미지원·실패 시에만 서버 경유, 원가 상한 1인 월 1,000원 | applied:docs/00-plan/product-decisions.md, docs/00-plan/cost-model.md, AGENTS.md §6-5
-- [x] S5 | CORE  | 처리 완료 시점 요구 | depends:S4             | status:RESOLVED | decision:업로드 뒤 1시간 상한, 묶음 처리, 부분 처리와 알림 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-6
-- [x] S6 | CORE  | 계정과 인증 방식 | depends:S1             | status:RESOLVED | decision:학습자는 초대 링크+번호 확인, 강사는 전용 주소, 기관은 이메일·비밀번호 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-7
-- [x] S7 | CORE  | 확정 기술 스택과 금지 스택 | depends:S1,S2,S3,S4,S6 | status:RESOLVED | decision:Next.js 단일 풀스택 + Kotlin·Compose 안드로이드 전용 앱, Claude 묶음 호출 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-10 | note:aztks apply로 결정
-- [x] S8 | MINOR | SRS 문서 규약 | depends:-              | status:RESOLVED | decision:요구사항 번호+근거+수용 기준, 한국어 본문, 코드 식별자는 부록 표 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-9
-- [x] S11 | CORE  | 만드는 순서와 데모 단계의 범위 | depends:S7             | status:RESOLVED | decision:웹 먼저 데모, 그다음 안드로이드 앱, 서버 공용 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-11
-- [x] S9 | MINOR | SRS에 넣을 다이어그램 | depends:S7             | status:RESOLVED | decision:7개 선정, 6종 제외, 라벨 한국어, 단계는 그림에 섞지 않음 | applied:docs/00-plan/product-decisions.md, AGENTS.md §6-12 | note:aztks apply로 결정
+무엇을 만들고 누구에게 파는지를 정한 것이다.
 
-## 재개방 — 2026-09-16
+```
+RESOLVED: 9 / DROPPED: 0 / TOTAL: 9
+```
 
-`cost-model.md`의 원가 계산 결과로 다음 두 가지가 생겼다.
+| 번호 | 토픽 | 결정 | 반영 위치 |
+|---|---|---|---|
+| T1 | 제품을 쓰는 주체와 값을 내는 주체의 위상 | 기관이 구매하고 학습자가 사용한다 | `AGENTS.md` §5-1 |
+| T2 | 훈련기관이 이 제품을 사는 이유 | 1순위 중도 탈락 감소, 2순위 취업률 방어 | `AGENTS.md` §5-2 |
+| T3 | 강의 음성의 획득 경로와 강사 동의 | 학습자 당일 업로드, 원본은 기기에만, 동의는 제품이 직접 수집 | `AGENTS.md` §5-3 |
+| T4 | 과금 단위와 계약 형태 | 재적 인원 기준 월별 청구, 1인 1개월 3,000원 | `AGENTS.md` §5-4 |
+| T5 | 신호 판정의 품질 기준선 | 정밀도 우선, 재현율 하한 88.7% | `AGENTS.md` §5-5 |
+| T6 | 최소 기능 범위 | 학습자 화면 전부 + 강사 동의 + 기관 화면 1종 | `AGENTS.md` §5-6 |
+| T7 | 개인정보와 저작권 운영 규칙 | 질의응답 포함 전사, 화자 구분 없음, 전사본 6개월 보관 | `AGENTS.md` §5-8 |
+| T8 | 제품 문서의 용어 표기 | 본문은 한국어만, 코드 식별자는 SRS 부록 | `AGENTS.md` §5-9 |
+| T9 | 뒤처짐 판정 기준 | 복습 목록 3일 연속 미열람. 강의가 올라온 날만 센다 | `AGENTS.md` §5-7 |
 
-- **S10 신설** — 회차당 한 벌만 전사하는 것이 제품 성립 조건으로 드러났다. 정본 선정과 발화 지점 환산을 정해야 한다.
-- **T4 재개방** — 1회차에서 확정한 1인 월 3,000원이 원가를 덮지 못한다. S4에서 원가가 확정된 뒤 단가를 다시 정한다. 1회차 분모는 그대로 두고 이 항목만 다시 연다.
+---
 
-## T4 재개방 종결 — 2026-09-16
+## 기술 결정
 
-S4에서 기기 전사를 기본 경로로 확정해 1인당 원가가 430원 수준으로 내려갔다. 1인 월 3,000원이 성립하므로 **T4를 고치지 않고 그대로 유지한다.** 재개방을 종결한다.
+어떻게 만들지를 정한 것이다.
 
-## 2회차 종료 — 2026-09-16
+```
+RESOLVED: 12 / DROPPED: 0 / TOTAL: 12
+```
 
-토픽 11건이 모두 해소됐다. SRS 착수 조건이 충족됐다.
+| 번호 | 토픽 | 결정 | 반영 위치 |
+|---|---|---|---|
+| S1 | 학습자가 쓰는 실행 형태 | 학습자는 휴대폰 앱, 기관과 강사는 웹 | `AGENTS.md` §6-1 |
+| S2 | 녹음을 앱이 직접 하는가 | 앱이 직접 녹음. 외부 파일 가져오기 없음 | `AGENTS.md` §6-2 |
+| S3 | 음성이 서버를 거치는가 | 거치되 두지 않음. 전사 후 즉시 삭제, 실패 시 24시간 상한 | `AGENTS.md` §6-3 |
+| S4 | 전사 방식과 원가 상한 | 기기 안에서 조각 단위로 전사. 원가 상한 1인 월 1,000원 | `AGENTS.md` §6-5 |
+| S5 | 처리 완료 시점 | 올린 뒤 1시간 상한, 묶음 처리, 하루치 목록에 증분 추가 | `AGENTS.md` §6-6 · §6-8 |
+| S6 | 계정과 인증 | 학습자는 구글 로그인, 강사는 무계정 전용 주소, 기관은 이메일 | `AGENTS.md` §6-7 |
+| S7 | 기술 스택과 금지 스택 | 단일 풀스택 서버 + 안드로이드 전용 앱 | `AGENTS.md` §6-10 |
+| S8 | SRS 문서 규약 | 요구사항 번호와 근거와 수용 기준, 한국어 본문 | `AGENTS.md` §6-9 |
+| S9 | SRS에 넣을 다이어그램 | 7개 선정, 6종 제외, 이름표는 한국어 | `AGENTS.md` §6-12 |
+| S10 | 회차당 정본과 발화 지점 | 첫 업로드를 즉시 기준으로, 미포함 구간만 추가 처리 | `AGENTS.md` §6-4 |
+| S11 | 만드는 순서 | 웹이 1단계, 안드로이드 앱이 2단계. 서버는 공용 | `AGENTS.md` §6-11 |
+| S12 | 데모에 쓰는 판정 결과 | 실측 53건을 미리 넣고, 판정 연결은 열쇠가 있을 때만 | — |
 
-## 실기기 확인 결과 반영 — 2026-09-16
+S7과 S9는 aztks 기준으로 정했다.
 
-실기기 확인으로 다음이 드러나 S4와 T7을 고쳤다. 토픽을 새로 세우지 않고 기존 결정의 내용을 갱신했다.
+---
 
-| 확인한 것 | 결과 | 반영 |
+## 결정 밖에서 확정한 것
+
+| 항목 | 내용 | 반영 위치 |
 |---|---|---|
-| 비행기 모드 전사 | 동작한다. 기기 안에서 처리하는 것이 확증됐다 | S4 확인 항목에서 제거 |
-| 15분 녹음 | 문제없다 | S4 확인 항목 축소. 3시간과 6시간은 남았다 |
-| 화자 구분 | 제조사 앱 화면에서만 보이고 내보내면 사라진다. 정확도도 높지 않다 | T7을 **화자 구분 없음**으로 변경 |
-| 인식기 접근 | 제조사 앱의 전사 기능은 다른 앱에 열려 있지 않다 | S4에 **우리 앱이 쓸 인식기의 품질은 미확인**으로 범위를 좁히고 세 갈래를 열어 둠 |
-
-이에 따라 제품 요구사항 정의서를 버전 1.2로, 시스템 요구사항 정의서의 관련 항목을 함께 고쳤다.
-
-## 학습자 인증 방식 변경 — 2026-09-16
-
-문자 인증과 간편인증이 국내에서 공급자 계약이나 기관 심사를 요구하고 건당 비용이 붙어, 앱 착수의 선행 조건이 되는 것이 확인됐다. **S6의 학습자 인증을 구글 계정 로그인으로 바꿨다.**
-
-| 항목 | 이전 | 이후 |
-|---|---|---|
-| 학습자 인증 | 초대 링크 + 휴대폰 번호 확인 | 초대 링크 + 구글 계정 로그인 |
-| 명단 대조 기준 | 휴대폰 번호 | 이메일 |
-| 필요한 외부 창구 | 문자 발송 공급자 | 없음 (구글 로그인은 무료) |
-
-이 제품에 필요한 것은 법적 본인확인이 아니라 그 사람이 과정에 속한 사람인지를 가리는 일 하나이므로 명단 대조로 충분하다.
-
-함께 정한 것으로 **판정 외에 고정비를 두지 않는다**는 원칙을 세웠다. 인프라와 로그인과 이메일 발송을 모두 무료 구간 안에서 해결한다.
-
-반영 위치: `product-decisions.md` S6·S7, `AGENTS.md` §6-7·§6-10, 시스템 요구사항 정의서 1장·2장·3장·REQ-FUNC-003, 기술 설계 문서 1장·3장·4장·8장, `tasks/task-list.md` A1.
-
-## 화면 자료 반입 — 2026-09-16
-
-화면 프로토타입과 브랜드 자료를 `docs/00-plan/references/`로 가져왔다.
-
-**프로토타입은 화면 예시로만 쓴다.** 확정된 요구사항과 어긋나는 여섯 곳은 요구사항을 따르기로 했다. 목록은 `references/README.md`에 있다. 어긋나는 이유는 프로토타입이 착수 전 결정보다 먼저 만들어졌기 때문이다.
-
-**브랜드 색은 디자인 토큰으로 옮겼다.** `src/app/globals.css`에 정의하고 화면에서는 토큰 이름으로 쓴다.
-
-## 강도 도입과 데모 자료 확정 — 2026-09-16
-
-**강도를 넣기로 했다.** 복습 목록을 시각 순으로만 쌓으면 강의를 순서대로 훑는 것이지 먼저 볼 것을 고른 것이 아니다. 목록의 순서를 매길 근거가 없었다. 분류 기준서와 실측 자료에 이미 강도가 있어 그대로 쓴다.
-
-반영 위치: 데이터베이스 표, 시스템 요구사항 정의서 버전 1.1, 제품 요구사항 정의서 버전 1.4, 기술 설계 문서, `AGENTS.md` §6-14.
-
-**S13을 새로 세웠다.** 데모에 쓰는 판정 결과를 정했다. 실측 53건을 미리 넣고 판정 연결은 열쇠가 있을 때만 도는 얇은 기능으로 둔다.
+| 강도 | 강조한 대목마다 1에서 3 사이의 강도가 붙고, 복습 목록은 강도 높은 순이다 | `AGENTS.md` §6-14 |
+| 확정 문구 | 카피 문구와 서비스 설명은 글자 그대로 쓴다 | [`copy.md`](copy.md) · `AGENTS.md` §6-13 |

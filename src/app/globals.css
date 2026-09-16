@@ -1,26 +1,63 @@
 @import "tailwindcss";
 
+/**
+ * 콕집 디자인 토큰.
+ * 브랜드 색 정의는 docs/00-plan/references/brand/color-palette.md 를 따른다.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 브랜드 핵심 */
+  --kokjip-navy: #142a52;
+  --kokjip-deep-navy: #12233f;
+  --kokjip-blue: #5b63e9;
+  --kokjip-blue-soft: #eef0ff;
+  --kokjip-mint: #18a77a;
+  --kokjip-mint-soft: #e9faf3;
+  --kokjip-yellow: #f5b83d;
+
+  /* 바탕과 선 */
+  --kokjip-bg: #f3f5f9;
+  --kokjip-line: #e4e8ef;
+  --kokjip-text-muted: #778296;
+  --kokjip-white: #ffffff;
+
+  /* 상태 */
+  --state-success: #18a77a;
+  --state-success-bg: #e9faf3;
+  --state-warning: #c78716;
+  --state-warning-bg: #fff4dd;
+  --state-error: #d65c68;
+  --state-error-bg: #fff0f2;
+  --state-info: #5b63e9;
+  --state-info-bg: #eef0ff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-navy: var(--kokjip-navy);
+  --color-deep-navy: var(--kokjip-deep-navy);
+  --color-brand: var(--kokjip-blue);
+  --color-brand-soft: var(--kokjip-blue-soft);
+  --color-mint: var(--kokjip-mint);
+  --color-mint-soft: var(--kokjip-mint-soft);
+  --color-accent: var(--kokjip-yellow);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-surface: var(--kokjip-white);
+  --color-canvas: var(--kokjip-bg);
+  --color-line: var(--kokjip-line);
+  --color-muted: var(--kokjip-text-muted);
+
+  --color-success: var(--state-success);
+  --color-success-bg: var(--state-success-bg);
+  --color-warning: var(--state-warning);
+  --color-warning-bg: var(--state-warning-bg);
+  --color-danger: var(--state-error);
+  --color-danger-bg: var(--state-error-bg);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--kokjip-bg);
+  color: var(--kokjip-navy);
+  font-family:
+    Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
 }

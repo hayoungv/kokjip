@@ -45,9 +45,22 @@ async function main() {
     update: {},
   });
 
+  // 기관 담당자. 리서치 문서의 페르소나를 쓴다.
+  await prisma.institutionAdmin.upsert({
+    where: { email: "admin@example.com" },
+    create: {
+      institutionId: institution.id,
+      email: "admin@example.com",
+      passwordHash: "seed-not-a-real-hash",
+    },
+    update: {},
+  });
+
+  // 학습자. 김지원은 리서치 문서의 페르소나이고,
+  // 둘째는 같은 회차를 여럿이 올리는 경우를 확인하려고 둔 자리다.
   const learners = [
     { id: "seed-learner-1", name: "김지원", email: "jiwon@example.com" },
-    { id: "seed-learner-2", name: "박서연", email: "seoyeon@example.com" },
+    { id: "seed-learner-2", name: "학습자2", email: "learner2@example.com" },
   ];
 
   for (const l of learners) {
@@ -102,6 +115,7 @@ async function main() {
   console.log(`  훈련기관: ${institution.name}`);
   console.log(`  과정: ${course.name} (정원 ${course.capacity}명)`);
   console.log(`  강사: ${instructor.name} — 녹음 허용 완료`);
+  console.log("  기관 담당자: 박성호 (admin@example.com)");
   console.log(`  학습자: ${learners.map((l) => l.name).join(", ")}`);
 }
 

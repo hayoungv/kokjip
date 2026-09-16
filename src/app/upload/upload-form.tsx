@@ -80,15 +80,15 @@ export function UploadForm({ courseId, courseName, learners }: Props) {
   return (
     <div className="space-y-8">
       <section>
-        <h2 className="text-sm font-medium text-gray-900">1. 옮긴 글 파일</h2>
-        <p className="mt-1 text-sm text-gray-600">
+        <h2 className="text-sm font-medium text-navy">1. 옮긴 글 파일</h2>
+        <p className="mt-1 text-sm text-muted">
           휴대폰 녹음 앱에서 내보낸 글 파일을 고르세요. 한 파일에 녹음이 여러 개
           들어 있어도 알아서 나눕니다.
         </p>
         <input
           type="file"
           accept=".txt,text/plain"
-          className="mt-3 block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:bg-gray-900 file:px-4 file:py-2 file:text-sm file:text-white hover:file:bg-gray-700"
+          className="mt-3 block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:bg-navy file:px-4 file:py-2 file:text-sm file:text-white hover:file:opacity-90"
           onChange={(e) => {
             const file = e.target.files?.[0];
             if (file) void handleFile(file);
@@ -99,10 +99,10 @@ export function UploadForm({ courseId, courseName, learners }: Props) {
       {recordings.length > 0 && (
         <>
           <section>
-            <h2 className="text-sm font-medium text-gray-900">
+            <h2 className="text-sm font-medium text-navy">
               2. 녹음을 시작한 시각
             </h2>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="mt-1 text-sm text-muted">
               {fileName}에서 녹음 {recordings.length}개를 찾았습니다. 각각 언제
               시작했는지 넣어 주세요.
             </p>
@@ -111,12 +111,12 @@ export function UploadForm({ courseId, courseName, learners }: Props) {
               {recordings.map((recording, index) => (
                 <li
                   key={index}
-                  className="flex flex-wrap items-center gap-3 rounded-md border border-gray-200 p-3"
+                  className="flex flex-wrap items-center gap-3 rounded-md border border-line p-3"
                 >
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className="text-sm font-medium text-navy">
                     {index + 1}번
                   </span>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm text-muted">
                     약 {formatDuration(recording.lastOffsetMs)} · 덩어리{" "}
                     {recording.blocks.length}개
                   </span>
@@ -128,7 +128,7 @@ export function UploadForm({ courseId, courseName, learners }: Props) {
                       next[index] = e.target.value;
                       setStartTimes(next);
                     }}
-                    className="ml-auto rounded-md border border-gray-300 px-2 py-1 text-sm"
+                    className="ml-auto rounded-md border border-line px-2 py-1 text-sm"
                   />
                 </li>
               ))}
@@ -136,11 +136,11 @@ export function UploadForm({ courseId, courseName, learners }: Props) {
           </section>
 
           <section>
-            <h2 className="text-sm font-medium text-gray-900">3. 올리는 사람</h2>
+            <h2 className="text-sm font-medium text-navy">3. 올리는 사람</h2>
             <select
               value={learnerId}
               onChange={(e) => setLearnerId(e.target.value)}
-              className="mt-3 rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className="mt-3 rounded-md border border-line px-3 py-2 text-sm"
             >
               {learners.map((l) => (
                 <option key={l.id} value={l.id}>
@@ -148,13 +148,13 @@ export function UploadForm({ courseId, courseName, learners }: Props) {
                 </option>
               ))}
             </select>
-            <p className="mt-2 text-xs text-gray-500">
+            <p className="mt-2 text-xs text-muted">
               {courseName}에 속한 학습자입니다.
             </p>
           </section>
 
-          <section className="rounded-md bg-amber-50 p-4">
-            <p className="text-sm text-amber-900">
+          <section className="rounded-md bg-warning-bg p-4">
+            <p className="text-sm text-warning">
               질의응답 중에 나온 다른 수강생의 목소리도 함께 글로 옮겨집니다.
               누가 말했는지는 구분하지 않으며, 복습 목록에 오르는 것은 강사의
               말뿐입니다.
@@ -165,7 +165,7 @@ export function UploadForm({ courseId, courseName, learners }: Props) {
             type="button"
             disabled={busy || !learnerId}
             onClick={() => void handleSubmit()}
-            className="rounded-md bg-gray-900 px-5 py-2.5 text-sm font-medium text-white disabled:opacity-40"
+            className="rounded-md bg-navy px-5 py-2.5 text-sm font-medium text-white disabled:opacity-40"
           >
             {busy ? "올리는 중" : `녹음 ${recordings.length}개 올리기`}
           </button>
@@ -174,14 +174,14 @@ export function UploadForm({ courseId, courseName, learners }: Props) {
 
       {results.length > 0 && (
         <section className="space-y-3">
-          <h2 className="text-sm font-medium text-gray-900">결과</h2>
+          <h2 className="text-sm font-medium text-navy">결과</h2>
           {results.map((result, index) => (
             <div
               key={index}
               className={`rounded-md border p-3 text-sm ${
                 result.ok
-                  ? "border-gray-200 bg-gray-50 text-gray-700"
-                  : "border-red-200 bg-red-50 text-red-700"
+                  ? "border-line bg-canvas text-navy"
+                  : "border-danger bg-danger-bg text-danger"
               }`}
             >
               <p className="font-medium">{index + 1}번 녹음</p>

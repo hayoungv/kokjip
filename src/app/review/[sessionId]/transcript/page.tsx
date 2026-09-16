@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BrandHeader } from "@/app/brand-header";
+import { PhoneFrame } from "@/app/phone-frame";
 import { typeName, type HighlightTypeName } from "@/domain/highlight-type";
 import { formatElapsed } from "@/domain/time";
 import { prisma } from "@/lib/prisma";
@@ -32,33 +31,20 @@ export default async function TranscriptPage({
   const totalBlocks = segments.reduce((sum, s) => sum + s.blocks.length, 0);
 
   return (
-    <>
-      <BrandHeader section="강의 기록 전체" />
+    <PhoneFrame section="강의 기록 전체" back={`/review/${sessionId}`}>
+      <p className="text-xl font-bold text-navy">강의 기록 전체</p>
+      <p className="mt-1 text-xs text-muted">
+        덩어리 {totalBlocks.toLocaleString()}개 · 화자를 구분하지 않습니다
+      </p>
 
-      <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-8">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <p className="text-2xl font-bold text-navy">강의 기록 전체</p>
-            <p className="mt-1 text-xs text-muted">
-              덩어리 {totalBlocks.toLocaleString()}개 · 화자를 구분하지 않습니다
-            </p>
-          </div>
-          <Link
-            href={`/review/${sessionId}`}
-            className="rounded-lg bg-canvas px-3 py-2 text-xs font-medium text-navy"
-          >
-            복습 목록으로
-          </Link>
-        </div>
-
-        <p className="mt-4 rounded-lg bg-warning-bg p-3 text-xs leading-relaxed text-warning">
+      <p className="mt-4 rounded-lg bg-warning-bg p-3 text-xs leading-relaxed text-warning">
           복습 목록이 놓친 말이 있을 수 있어 강의 기록 전체를 그대로 둡니다.
           질의응답도 함께 들어 있으며 누가 말했는지는 기록하지 않습니다.
         </p>
 
-        {segments.map((segment) => (
-          <section key={segment.id} className="mt-8">
-            <h2 className="sticky top-0 bg-canvas py-2 text-sm font-semibold text-navy">
+      {segments.map((segment) => (
+        <section key={segment.id} className="mt-6">
+          <h2 className="sticky top-0 bg-canvas py-2 text-sm font-semibold text-navy">
               {segment.label}
             </h2>
 
@@ -90,9 +76,8 @@ export default async function TranscriptPage({
                 );
               })}
             </ol>
-          </section>
-        ))}
-      </main>
-    </>
+        </section>
+      ))}
+    </PhoneFrame>
   );
 }

@@ -1,12 +1,14 @@
-import { elapsedInSegment } from "@/domain/time";
 import type { HighlightTypeName } from "@/domain/highlight-type";
+import { orderReview, type OrderedTopic } from "@/domain/review-order";
+import { elapsedInSegment } from "@/domain/time";
 import { prisma } from "@/lib/prisma";
 
 /**
- * 복습 목록을 읽는 처리.
+ * 복습 순서를 읽는 처리.
  *
- * 목록은 하루에 하나이고, 강도가 높은 순으로 보여준다.
- * 강도가 같으면 시각 순이다.
+ * 목록은 하루에 하나다. 목차가 있으면 목차 항목을 나열하고,
+ * 없으면 강조한 말을 강도 높은 순으로 나열한다.
+ * 순서를 정하는 규칙 자체는 도메인 계층에 있다.
  */
 
 export type ReviewItem = {
@@ -16,9 +18,13 @@ export type ReviewItem = {
   quote: string;
   /** 실제 시각 */
   occurredAt: Date;
+  /** 붙은 목차 항목. 없으면 null */
+  tocItemId: string | null;
   /** 그 말이 담긴 녹음. 담고 있는 녹음이 없으면 null */
   segment: { id: string; label: string; elapsedMs: number } | null;
 };
+
+export type ReviewTopic = OrderedTopic<ReviewItem>;
 
 export type ReviewDay = {
   sessionId: string;
@@ -29,6 +35,13 @@ export type ReviewDay = {
     startedAt: Date;
     endedAt: Date;
   }>;
+  /** 이 과정에 확정된 목차가 있는지 */
+  hasToc: boolean;
+  /** 목차가 있을 때 나열하는 것. 우선 학습할 순이다 */
+  topics: ReviewTopic[];
+  /** 어느 항목에도 붙지 않은 말. 버리지 않고 따로 모은다 */
+  loose: ReviewItem[];
+  /** 목차가 없을 때 나열하는 것. 강도 높은 순이다 */
   items: ReviewItem[];
 };
 
@@ -64,6 +77,12 @@ export async function readReviewDay(
 
   if (!session) return null;
 
+  const tocItems = await prisma.tocItem.findMany({
+    where: { courseId: session.courseId },
+    orderBy: { order: "asc" },
+    select: { id: true, title: true, depth: true, order: true, parentId: true },
+  });
+
   const segments = session.segments.map((s) => ({
     id: s.id,
     label: s.clientKey,
@@ -90,9 +109,12 @@ export async function readReviewDay(
       strength: h.strength,
       quote: h.quote,
       occurredAt: h.occurredAt,
+      tocItemId: h.tocItemId,
       segment: found,
     };
   });
+
+  const { topics, loose } = orderReview(items, tocItems);
 
   return {
     sessionId: session.id,
@@ -103,6 +125,9 @@ export async function readReviewDay(
       startedAt,
       endedAt,
     })),
+    hasToc: tocItems.length > 0,
+    topics,
+    loose,
     items,
   };
 }

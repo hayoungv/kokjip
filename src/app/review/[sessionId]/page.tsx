@@ -1,7 +1,11 @@
 import { notFound } from "next/navigation";
-import { BrandHeader } from "@/app/brand-header";
+import { PhoneFrame } from "@/app/phone-frame";
 import { prisma } from "@/lib/prisma";
-import { readReviewDay, recordListView } from "@/server/api/review";
+import {
+  readReviewDay,
+  recordListView,
+  type ReviewItem,
+} from "@/server/api/review";
 import { ReviewList } from "./review-list";
 
 export const dynamic = "force-dynamic";
@@ -14,6 +18,17 @@ function dateLabel(date: Date): string {
     day: "numeric",
     weekday: "long",
   }).format(date);
+}
+
+function toView(item: ReviewItem) {
+  return {
+    id: item.id,
+    type: item.type,
+    strength: item.strength,
+    quote: item.quote,
+    occurredAtIso: item.occurredAt.toISOString(),
+    segment: item.segment,
+  };
 }
 
 export default async function ReviewPage({
@@ -33,24 +48,22 @@ export default async function ReviewPage({
   }
 
   return (
-    <>
-      <BrandHeader section="오늘의 복습" />
-
-      <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-8">
-        <ReviewList
-          sessionId={day.sessionId}
-          dateLabel={dateLabel(day.date)}
-          segments={day.segments.map((s) => ({ id: s.id, label: s.label }))}
-          items={day.items.map((item) => ({
-            id: item.id,
-            type: item.type,
-            strength: item.strength,
-            quote: item.quote,
-            occurredAtIso: item.occurredAt.toISOString(),
-            segment: item.segment,
-          }))}
-        />
-      </main>
-    </>
+    <PhoneFrame section="오늘의 복습" back="/review">
+      <ReviewList
+        sessionId={day.sessionId}
+        dateLabel={dateLabel(day.date)}
+        segments={day.segments.map((s) => ({ id: s.id, label: s.label }))}
+        hasToc={day.hasToc}
+        topics={day.topics.map((topic) => ({
+          id: topic.item.id,
+          title: topic.item.title,
+          parentTitle: topic.parentTitle,
+          strengthSum: topic.strengthSum,
+          items: topic.highlights.map(toView),
+        }))}
+        loose={day.loose.map(toView)}
+        items={day.items.map(toView)}
+      />
+    </PhoneFrame>
   );
 }

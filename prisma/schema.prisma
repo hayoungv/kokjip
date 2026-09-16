@@ -192,12 +192,13 @@ model CoveredRange {
   @@index([sessionId, fromAt])
 }
 
-/// 강조한 대목. 시각은 실제 시각이다.
+/// 강조한 대목. 시각은 실제 시각이고, 강도는 1에서 3 사이다.
 model Highlight {
   id              String        @id @default(cuid())
   sessionId       String
   sourceSegmentId String
   type            HighlightType
+  strength        Int
   quote           String
   occurredAt      DateTime
   createdAt       DateTime      @default(now())

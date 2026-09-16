@@ -91,7 +91,7 @@ flowchart TB
 | `RecordingSegment` | `id`, `sessionId`, `learnerId`, `clientKey`, `startedAt`, `endedAt`, `gaps`, `clockOffsetMs`, `isCanonical` |
 | `Transcript` | `id`, `segmentId`, `blocks`, `createdAt` |
 | `CoveredRange` | `id`, `sessionId`, `fromAt`, `toAt` |
-| `Highlight` | `id`, `sessionId`, `type`, `quote`, `occurredAt`, `sourceSegmentId` |
+| `Highlight` | `id`, `sessionId`, `type`, `strength`, `quote`, `occurredAt`, `sourceSegmentId` |
 | `ListView` | `id`, `learnerId`, `sessionId`, `viewedAt` |
 | `AudioIntake` | `id`, `segmentId`, `receivedAt`, `deletedAt` |
 | `JudgementBatch` | `id`, `externalId`, `submittedAt`, `completedAt`, `inputTokens`, `outputTokens`, `costKrw` |

@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
+import { hashToken } from "../src/lib/instructor-token";
 import { hashPassword } from "../src/lib/password";
 
 /**
@@ -96,6 +97,10 @@ async function main() {
     });
   }
 
+  // 강사 전용 주소. 실제로는 부를 때마다 새로 만들지만,
+  // seed에서는 화면을 열어 볼 수 있도록 값을 고정한다.
+  const instructorToken = "seed-instructor-token";
+
   await prisma.recordingConsent.upsert({
     where: {
       instructorId_courseId: {
@@ -106,19 +111,67 @@ async function main() {
     create: {
       instructorId: instructor.id,
       courseId: course.id,
-      tokenHash: "seed-token-hash",
+      tokenHash: hashToken(instructorToken),
       tokenExpiresAt: new Date("2026-12-31T00:00:00Z"),
       consentedAt: new Date(),
+      lastNotifiedAt: new Date(),
+      reminderCount: 1,
+    },
+    update: {
+      tokenHash: hashToken(instructorToken),
+      tokenExpiresAt: new Date("2026-12-31T00:00:00Z"),
+    },
+  });
+
+  // 아직 동의하지 않은 과정. 안내 보내기부터 동의까지 걸어 보려고 둔 자리다.
+  const secondInstructor = await prisma.instructor.upsert({
+    where: { id: "seed-instructor-2" },
+    create: {
+      id: "seed-instructor-2",
+      name: "한서진",
+      email: "instructor2@example.com",
     },
     update: {},
   });
+
+  const secondCourse = await prisma.course.upsert({
+    where: { id: "seed-course-2" },
+    create: {
+      id: "seed-course-2",
+      institutionId: institution.id,
+      instructorId: secondInstructor.id,
+      name: "데이터 분석 실무 과정",
+      startDate: new Date("2026-09-01T00:00:00Z"),
+      endDate: new Date("2027-02-26T00:00:00Z"),
+      capacity: 25,
+    },
+    update: {},
+  });
+
+  for (const l of [
+    { id: "seed-learner-3", name: "정민수", email: "minsu@example.com" },
+    { id: "seed-learner-4", name: "오하늘", email: "haneul@example.com" },
+  ]) {
+    await prisma.learner.upsert({ where: { id: l.id }, create: l, update: {} });
+    await prisma.enrollment.upsert({
+      where: { courseId_learnerId: { courseId: secondCourse.id, learnerId: l.id } },
+      create: {
+        courseId: secondCourse.id,
+        learnerId: l.id,
+        joinedOn: new Date("2026-09-01T00:00:00Z"),
+      },
+      update: {},
+    });
+  }
 
   console.log("seed 데이터를 넣었습니다.");
   console.log(`  훈련기관: ${institution.name}`);
   console.log(`  과정: ${course.name} (정원 ${course.capacity}명)`);
   console.log(`  강사: ${instructor.name} — 녹음 허용 완료`);
+  console.log(`  강사 전용 주소: /instructor/${instructorToken}`);
   console.log("  기관 담당자: 박성호 (admin@example.com)");
   console.log(`  학습자: ${learners.map((l) => l.name).join(", ")}`);
+  console.log(`  두 번째 과정: ${secondCourse.name} — ${secondInstructor.name} 강사, 아직 동의 전`);
 }
 
 main()

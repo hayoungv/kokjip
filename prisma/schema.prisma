@@ -1,5 +1,5 @@
 // 콕집 데이터 모델
-// 기술 설계 문서 3-1의 표 14종을 그대로 옮긴 것이다.
+// 기술 설계 문서 3-1의 표 20종을 그대로 옮긴 것이다.
 // 저장하는 모든 시각은 실제 시각이다. 경과 시각은 화면에서만 계산한다.
 
 generator client {
@@ -36,14 +36,14 @@ model InstitutionAdmin {
 
 /// 과정
 model Course {
-  id            String    @id @default(cuid())
+  id            String   @id @default(cuid())
   institutionId String
   instructorId  String
   name          String
-  startDate     DateTime  @db.Date
-  endDate       DateTime  @db.Date
+  startDate     DateTime @db.Date
+  endDate       DateTime @db.Date
   capacity      Int
-  createdAt     DateTime  @default(now())
+  createdAt     DateTime @default(now())
 
   institution Institution        @relation(fields: [institutionId], references: [id], onDelete: Cascade)
   instructor  Instructor         @relation(fields: [instructorId], references: [id])
@@ -51,6 +51,8 @@ model Course {
   enrollments Enrollment[]
   invites     Invite[]
   consents    RecordingConsent[]
+  materials   CourseMaterial[]
+  tocItems    TocItem[]
 
   @@index([institutionId])
   @@index([instructorId])
@@ -76,6 +78,7 @@ model RecordingConsent {
   tokenExpiresAt DateTime
   consentedAt    DateTime?
   lastNotifiedAt DateTime?
+  reminderCount  Int       @default(0)
   createdAt      DateTime  @default(now())
 
   instructor Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
@@ -141,11 +144,12 @@ model Session {
   highlights    Highlight[]
   listViews     ListView[]
   tasks         JudgementTask[]
+  topics        SessionTopic[]
 
   @@unique([courseId, date])
 }
 
-/// 녹음 조각. 한 회차에 정본은 하나이고 조각은 여럿이다.
+/// 녹음. 학습자가 한 번 켜고 끈 단위다. 한 회차에 정본은 하나이고 녹음은 여럿이다.
 model RecordingSegment {
   id            String   @id @default(cuid())
   sessionId     String
@@ -158,8 +162,8 @@ model RecordingSegment {
   isCanonical   Boolean  @default(false)
   createdAt     DateTime @default(now())
 
-  session     Session      @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  learner     Learner      @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  session     Session         @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  learner     Learner         @relation(fields: [learnerId], references: [id], onDelete: Cascade)
   transcript  Transcript?
   audioIntake AudioIntake?
   highlights  Highlight[]
@@ -169,7 +173,7 @@ model RecordingSegment {
   @@index([sessionId])
 }
 
-/// 옮긴 글. 화자 항목은 없다.
+/// 강의 기록. 화자 항목은 없다.
 model Transcript {
   id        String   @id @default(cuid())
   segmentId String   @unique
@@ -179,7 +183,7 @@ model Transcript {
   segment RecordingSegment @relation(fields: [segmentId], references: [id], onDelete: Cascade)
 }
 
-/// 이미 옮기고 판정까지 마친 구간. 중복 처리를 막는 장치다.
+/// 이미 글로 옮기고 판정까지 마친 구간. 중복 처리를 막는 장치다.
 model CoveredRange {
   id        String   @id @default(cuid())
   sessionId String
@@ -192,11 +196,13 @@ model CoveredRange {
   @@index([sessionId, fromAt])
 }
 
-/// 강조한 대목. 시각은 실제 시각이고, 강도는 1에서 3 사이다.
+/// 강사가 강조한 말. 시각은 실제 시각이고, 강도는 1에서 3 사이다.
+/// 붙은 목차 항목은 비어 있을 수 있다. 목차가 없는 과정이거나 어느 항목에도 해당하지 않는 말이다.
 model Highlight {
   id              String        @id @default(cuid())
   sessionId       String
   sourceSegmentId String
+  tocItemId       String?
   type            HighlightType
   strength        Int
   quote           String
@@ -205,9 +211,11 @@ model Highlight {
 
   session       Session          @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   sourceSegment RecordingSegment @relation(fields: [sourceSegmentId], references: [id], onDelete: Cascade)
+  tocItem       TocItem?         @relation(fields: [tocItemId], references: [id], onDelete: SetNull)
 
   @@unique([sessionId, occurredAt, type])
   @@index([sessionId])
+  @@index([tocItemId])
 }
 
 /// 복습 목록을 연 기록. 뒤처짐 판정의 유일한 근거다.
@@ -248,7 +256,7 @@ model JudgementBatch {
   @@index([submittedAt])
 }
 
-/// 강조한 대목의 여덟 가지 유형.
+/// 강사가 강조한 말의 여덟 가지 유형.
 /// 본문 표기와의 대응은 시스템 요구사항 정의서 부록 A-1에 있다.
 enum HighlightType {
   AVOID
@@ -263,21 +271,29 @@ enum HighlightType {
 
 /// 판정 대기열. 처리해야 할 구간 하나가 한 줄이다.
 model JudgementTask {
-  id              String     @id @default(cuid())
+  id              String        @id @default(cuid())
   sessionId       String
   sourceSegmentId String
+  kind            JudgementKind @default(HIGHLIGHT)
   fromAt          DateTime
   toAt            DateTime
-  status          TaskStatus @default(PENDING)
+  status          TaskStatus    @default(PENDING)
   batchId         String?
-  createdAt       DateTime   @default(now())
+  createdAt       DateTime      @default(now())
   completedAt     DateTime?
 
   session       Session          @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   sourceSegment RecordingSegment @relation(fields: [sourceSegmentId], references: [id], onDelete: Cascade)
 
+  @@unique([sourceSegmentId, kind, fromAt])
   @@index([status, createdAt])
   @@index([sessionId])
+}
+
+/// 판정의 두 갈래. 구간 정하기가 말 찾기보다 먼저 돈다.
+enum JudgementKind {
+  TOPIC
+  HIGHLIGHT
 }
 
 /// 판정 대기열의 상태.
@@ -286,4 +302,64 @@ enum TaskStatus {
   SUBMITTED
   DONE
   FAILED
+}
+
+/// 학습 자료. 강사가 올린 원본은 목차를 읽고 나면 지운다.
+/// 원본을 담는 열이 없다. 남는 것은 어디서 왔는지와 언제 들어와 언제 지워졌는지다.
+model CourseMaterial {
+  id          String       @id @default(cuid())
+  courseId    String
+  kind        MaterialKind
+  /// 파일 이름이나 주소. 본문이 아니다.
+  sourceName  String
+  receivedAt  DateTime     @default(now())
+  confirmedAt DateTime?
+  deletedAt   DateTime?
+  failedAt    DateTime?
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
+  @@index([deletedAt])
+}
+
+/// 학습 자료가 들어온 네 가지 형식.
+enum MaterialKind {
+  DOCUMENT
+  WEB_PAGE
+  IMAGE
+  TYPED
+}
+
+/// 목차 항목. 제목과 순서와 계층이 전부다.
+/// 본문을 담는 열이 없다. 담을 곳이 없으므로 실수로 남을 일도 없다.
+model TocItem {
+  id       String  @id @default(cuid())
+  courseId String
+  parentId String?
+  order    Int
+  depth    Int
+  title    String
+
+  course     Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  parent     TocItem?       @relation("TocTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children   TocItem[]      @relation("TocTree")
+  topics     SessionTopic[]
+  highlights Highlight[]
+
+  @@index([courseId, order])
+}
+
+/// 한 회차가 다룬 목차 항목. 말을 항목에 붙일 때 후보를 이 안으로 한정한다.
+model SessionTopic {
+  id        String   @id @default(cuid())
+  sessionId String
+  tocItemId String
+  decidedAt DateTime @default(now())
+
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  tocItem TocItem @relation(fields: [tocItemId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, tocItemId])
+  @@index([sessionId])
 }

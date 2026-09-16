@@ -3,6 +3,7 @@ import { BrandHeader } from "@/app/brand-header";
 import { LAG_THRESHOLD_DAYS } from "@/domain/lag";
 import { readSession, endSession } from "@/lib/session";
 import { readInstitutionView } from "@/server/api/institution";
+import { ConsentPanel } from "./consent-panel";
 
 export const dynamic = "force-dynamic";
 
@@ -98,6 +99,15 @@ export default async function InstitutionPage() {
                 {course.learners.length}명
               </p>
             </div>
+
+            <ConsentPanel
+              courseId={course.id}
+              instructorName={course.consent.instructorName}
+              instructorEmail={course.consent.instructorEmail}
+              consented={course.consent.consentedAt !== null}
+              reminderCount={course.consent.reminderCount}
+              tocCount={course.consent.tocCount}
+            />
 
             <ul className="divide-y divide-line">
               {course.learners.map((learner) => (

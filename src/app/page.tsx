@@ -5,21 +5,26 @@ import { BrandHeader } from "./brand-header";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [institutions, courses, sessions, segments, highlights] = await Promise.all([
-    prisma.institution.count(),
-    prisma.course.count(),
-    prisma.session.count(),
-    prisma.recordingSegment.count(),
-    prisma.highlight.count(),
-  ]);
+  const [courses, sessions, segments, highlights, tocItems, consent] =
+    await Promise.all([
+      prisma.course.count(),
+      prisma.session.count(),
+      prisma.recordingSegment.count(),
+      prisma.highlight.count(),
+      prisma.tocItem.count(),
+      prisma.recordingConsent.findFirst({ orderBy: { createdAt: "asc" } }),
+    ]);
 
   const stats = [
-    { label: "훈련기관", value: institutions },
     { label: "과정", value: courses },
     { label: "회차", value: sessions },
     { label: "올라온 녹음", value: segments },
     { label: "강조한 말", value: highlights },
+    { label: "목차 항목", value: tocItems },
   ];
+
+  // seed가 값을 고정해 두므로 데모에서는 이 주소로 강사 화면을 열 수 있다.
+  const instructorPath = consent ? "/instructor/seed-instructor-token" : null;
 
   return (
     <>
@@ -65,6 +70,26 @@ export default async function Home() {
                 className="flex items-center justify-between rounded-lg bg-brand-soft px-4 py-3 text-sm font-medium text-brand"
               >
                 강의 기록 올리기
+                <span aria-hidden>&gt;</span>
+              </Link>
+            </li>
+            {instructorPath && (
+              <li>
+                <Link
+                  href={instructorPath}
+                  className="flex items-center justify-between rounded-lg border border-line px-4 py-3 text-sm font-medium text-navy"
+                >
+                  강사 화면 — 학습 자료와 회차 차단
+                  <span aria-hidden>&gt;</span>
+                </Link>
+              </li>
+            )}
+            <li>
+              <Link
+                href="/institution"
+                className="flex items-center justify-between rounded-lg border border-line px-4 py-3 text-sm font-medium text-navy"
+              >
+                훈련기관 화면
                 <span aria-hidden>&gt;</span>
               </Link>
             </li>

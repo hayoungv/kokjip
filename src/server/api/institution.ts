@@ -23,12 +23,24 @@ export type LaggingLearner = {
   lastViewedDate: string | null;
 };
 
+/** 한 과정의 강사 녹음 허용 상태. */
+export type ConsentStatus = {
+  instructorName: string;
+  instructorEmail: string;
+  consentedAt: Date | null;
+  /** 안내를 보낸 횟수. 한 번도 안 보냈으면 0이다. */
+  reminderCount: number;
+  /** 확정된 목차 항목 수. */
+  tocCount: number;
+};
+
 export type InstitutionView = {
   institutionName: string;
   courses: Array<{
     id: string;
     name: string;
     lectureDays: number;
+    consent: ConsentStatus;
     learners: LaggingLearner[];
   }>;
 };
@@ -53,11 +65,14 @@ export async function readInstitutionView(
     where: { institutionId: admin.institutionId },
     orderBy: { startDate: "asc" },
     include: {
+      instructor: true,
+      consents: true,
       sessions: { select: { id: true, date: true } },
       enrollments: {
         where: { leftOn: null },
         include: { learner: { select: { id: true, name: true } } },
       },
+      _count: { select: { tocItems: true } },
     },
   });
 
@@ -104,10 +119,19 @@ export async function readInstitutionView(
           })
           .sort((a, b) => b.missedDays - a.missedDays);
 
+        const consent = course.consents[0] ?? null;
+
         return {
           id: course.id,
           name: course.name,
           lectureDays: new Set(lectureDates).size,
+          consent: {
+            instructorName: course.instructor.name,
+            instructorEmail: course.instructor.email,
+            consentedAt: consent?.consentedAt ?? null,
+            reminderCount: consent?.reminderCount ?? 0,
+            tocCount: course._count.tocItems,
+          },
           learners,
         };
       }),

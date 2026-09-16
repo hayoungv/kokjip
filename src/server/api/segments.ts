@@ -26,6 +26,14 @@ export type UploadResult = {
   alreadyUploaded: boolean;
 };
 
+/** 강사가 막은 회차에 올리려 했을 때 나는 오류. */
+export class SessionBlockedError extends Error {
+  constructor(readonly sessionDate: string) {
+    super("강사가 이 회차의 녹음을 막았습니다.");
+    this.name = "SessionBlockedError";
+  }
+}
+
 export async function uploadSegment(
   input: UploadSegmentInput,
 ): Promise<UploadResult> {
@@ -68,6 +76,9 @@ export async function uploadSegment(
       },
       update: {},
     });
+
+    // 강사가 막은 회차에는 아무것도 올라가지 않는다.
+    if (session.blockedAt) throw new SessionBlockedError(sessionDate);
 
     const covered = await tx.coveredRange.findMany({
       where: { sessionId: session.id },

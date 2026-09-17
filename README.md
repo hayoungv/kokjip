@@ -8,10 +8,10 @@
 
 <br />
 
-[![데모 바로가기](https://img.shields.io/badge/데모_바로가기-5B63E9?style=for-the-badge&logoColor=white)](https://kokjip-prd-to-srs-psi.vercel.app)
-[![학습자 화면](https://img.shields.io/badge/학습자_화면-142A52?style=for-the-badge)](https://kokjip-prd-to-srs-psi.vercel.app/review)
-[![강사 화면](https://img.shields.io/badge/강사_화면-18A77A?style=for-the-badge)](https://kokjip-prd-to-srs-psi.vercel.app/instructor/seed-instructor-token)
-[![훈련기관 화면](https://img.shields.io/badge/훈련기관_화면-F5B83D?style=for-the-badge)](https://kokjip-prd-to-srs-psi.vercel.app/institution/login)
+[![데모 바로가기](https://img.shields.io/badge/데모_바로가기-5B63E9?style=for-the-badge&logoColor=white)](https://kokjip.vercel.app)
+[![학습자 화면](https://img.shields.io/badge/학습자_화면-142A52?style=for-the-badge)](https://kokjip.vercel.app/review)
+[![강사 화면](https://img.shields.io/badge/강사_화면-18A77A?style=for-the-badge)](https://kokjip.vercel.app/instructor/seed-instructor-token)
+[![훈련기관 화면](https://img.shields.io/badge/훈련기관_화면-F5B83D?style=for-the-badge)](https://kokjip.vercel.app/institution/login)
 
 [![PRD](https://img.shields.io/badge/PRD-왜_만드는가-12233F?style=flat-square)](docs/01-prd/prd.md)
 [![SRS](https://img.shields.io/badge/SRS-요구사항_34건-12233F?style=flat-square)](docs/02-srs/srs.md)
@@ -37,7 +37,7 @@
 
 | 보고 싶은 것 | 어디로 |
 |---|---|
-| 돌아가는 화면 | [데모](https://kokjip-prd-to-srs-psi.vercel.app) — 로그인 없이 학습자·강사 화면을 볼 수 있습니다 |
+| 돌아가는 화면 | [데모](https://kokjip.vercel.app) — 로그인 없이 학습자·강사 화면을 볼 수 있습니다 |
 | 왜 만드는가 | [제품 요구사항 정의서](docs/01-prd/prd.md) |
 | 무엇이 근거인가 | [아래 실측 표](#-근거가-되는-실측) · [원가 모형](docs/00-plan/cost-model.md) |
 
@@ -127,10 +127,10 @@
 
 | 주체 | 들어가는 곳 | 보이는 것 |
 |---|---|---|
-| 학습자 | [복습 순서](https://kokjip-prd-to-srs-psi.vercel.app/review) | 목차 항목을 우선 학습할 순으로. 항목을 열면 강사의 말과 다시 듣기 |
-| 학습자 | [오늘 강의 올리기](https://kokjip-prd-to-srs-psi.vercel.app/upload) | 강의 기록과 음성 파일을 올려 회차를 만드는 자리 |
-| 강사 | [학습 자료와 회차 차단](https://kokjip-prd-to-srs-psi.vercel.app/instructor/seed-instructor-token) | 계정 없이 전용 주소로 들어갑니다 |
-| 훈련기관 | [뒤처지는 수강생](https://kokjip-prd-to-srs-psi.vercel.app/institution/login) | `admin@example.com` / `kokjip` |
+| 학습자 | [복습 순서](https://kokjip.vercel.app/review) | 목차 항목을 우선 학습할 순으로. 항목을 열면 강사의 말과 다시 듣기 |
+| 학습자 | [오늘 강의 올리기](https://kokjip.vercel.app/upload) | 강의 기록과 음성 파일을 올려 회차를 만드는 자리 |
+| 강사 | [학습 자료와 회차 차단](https://kokjip.vercel.app/instructor/seed-instructor-token) | 계정 없이 전용 주소로 들어갑니다 |
+| 훈련기관 | [뒤처지는 수강생](https://kokjip.vercel.app/institution/login) | `admin@example.com` / `kokjip` |
 
 > **강사가 동의하는 장면까지 보시려면** 훈련기관 화면에서 "데이터 분석 실무 과정"의 `안내 보내기`를 누르시면 됩니다. 발송 서비스를 붙이지 않았으므로 전용 주소가 화면에 그대로 나옵니다.
 

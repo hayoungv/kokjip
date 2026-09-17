@@ -49,6 +49,7 @@
 | 무엇을 만족해야 하나 | [시스템 요구사항 정의서](docs/02-srs/srs.md) — 요구사항 34건, 각 건에 근거와 수용 기준 |
 | 어떻게 설계했나 | [기술 설계 문서](docs/03-tds/tds.md) — 표 20종, 계층, 판정 흐름 |
 | 어떤 단위로 구현했나 | [태스크 목록](tasks/task-list.md) — 15개, 요구사항과 대조표 |
+| 사람이 하는 일은 무엇인가 | [운영 문서](docs/04-ops/) — 대응 절차 · 강사 안내문 · 현장 인터뷰 설계 |
 
 **코드가 궁금하시다면**
 
@@ -204,7 +205,8 @@ docs/
 │  └─ references/  선행 리서치에서 가져온 읽기 전용 입력
 ├─ 01-prd/       왜 만드는가 · 누구를 위한 것인가
 ├─ 02-srs/       무엇을 만족해야 하는가 (요구사항 34건)
-└─ 03-tds/       어떻게 설계하는가
+├─ 03-tds/       어떻게 설계하는가
+└─ 04-ops/       제품이 돌 때 사람이 무엇을 하는가
 tasks/           어떤 단위로 구현하고 검증하는가 (태스크 15개)
 
 src/
@@ -324,6 +326,7 @@ npm run dev
 2. [`docs/02-srs/srs.md`](docs/02-srs/srs.md) — 무엇을 만족해야 하는가
 3. [`docs/03-tds/tds.md`](docs/03-tds/tds.md) — 어떻게 설계하는가
 4. [`tasks/task-list.md`](tasks/task-list.md) — 어떤 단위로 구현하는가
-5. [`AGENTS.md`](AGENTS.md) — 확정된 것 전부. 다시 협상하지 않는다
+5. [`docs/04-ops/`](docs/04-ops/) — 제품이 돌 때 사람이 무엇을 하는가
+6. [`AGENTS.md`](AGENTS.md) — 확정된 것 전부. 다시 협상하지 않는다
 
 결정의 근거는 [`docs/00-plan/product-decisions.md`](docs/00-plan/product-decisions.md)에, 문서 인덱스는 [`docs/README.md`](docs/README.md)에 있습니다. Claude Code 전용 설정은 [`CLAUDE.md`](CLAUDE.md)에 있습니다.

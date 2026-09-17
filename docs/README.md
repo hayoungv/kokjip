@@ -11,6 +11,7 @@
 | [`02-srs/srs.md`](02-srs/srs.md) | 무엇을 만족해야 하는가 | 작성 완료 (버전 2.0) |
 | [`03-tds/tds.md`](03-tds/tds.md) | 어떻게 설계하는가 | 작성 완료 (버전 2.0) |
 | [`../tasks/`](../tasks/) | 어떤 단위로 구현·검증하는가 | 작성 완료 (버전 2.0). 구현 진척은 [`../README.md`](../README.md)에 있다 |
+| [`04-ops/`](04-ops/) | 제품이 돌 때 사람이 무엇을 하는가 | 작성 완료 (버전 1.0). 순서 밖에 있다 |
 
 ## 착수 전 결정 (`00-plan/`)
 
@@ -21,6 +22,16 @@
 | [`pricing-simulation.md`](00-plan/pricing-simulation.md) | 과금 단위 비교 계산과 사실 확인 결과 |
 | [`cost-model.md`](00-plan/cost-model.md) | 원가가 붙는 경로와 계산 |
 | [`copy.md`](00-plan/copy.md) | 바깥에 내보이는 확정 문구 |
+
+## 운영 문서 (`04-ops/`)
+
+제품 기능으로 만들지 않고 사람이 처리하기로 한 일을 적는다. 담당자가 그대로 꺼내 쓸 수 있는 형태로 쓴다.
+
+| 파일 | 용도 |
+|---|---|
+| [`lagging-learner-response.md`](04-ops/lagging-learner-response.md) | 뒤처짐 신호를 받은 담당자의 대응 절차와 대본과 기록 양식 |
+| [`instructor-consent-notice.md`](04-ops/instructor-consent-notice.md) | 강사에게 보내는 녹음 허용 안내문과 재안내 규칙 |
+| [`field-interview-guide.md`](04-ops/field-interview-guide.md) | 확인하지 못한 값을 채우기 위한 현장 인터뷰 설계 |
 
 ## 입력 문서 (`00-plan/references/`)
 
